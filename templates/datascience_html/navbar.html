@@ -1,0 +1,98 @@
+{% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
+<style>
+        {#navbar brand css#}
+        .navbar{
+                border-bottom: 2px solid white;
+        }
+
+        .bg-dark {
+        background-color: #605b88 !important;
+}
+        .navbar-brand{
+            font-size: 2rem;
+            font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+        }
+		.sticky-footer{
+   position: absolute;
+   left: 0;
+   bottom: 0;
+   width: 100%;
+   background-color: #4f868c;
+   color: white;
+   text-align: center;
+   height:30px;
+                    }
+
+    .text-primary {
+        color: #101010 !important;
+    }
+    a{
+    border-radius: 30px;
+}
+    .btn:not(:disabled):not(.disabled) {
+    font-family: cursive;
+}
+
+	</style>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+	  <a class="navbar-brand" href="/stock">Kolentory</a>
+      <marquee width="60%" direction="right" height="50px" style="color: white">
+Let's manage Your inventory with us!
+</marquee>
+	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+	    <span class="navbar-toggler-icon"></span>
+	  </button>
+
+	  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+	    <ul class="navbar-nav ml-auto">
+
+
+			 {% if user.is_authenticated %}
+
+                 <a class="btn btn-success btn-lg" href="/add_product">Add New Product</a>&nbsp;
+
+{#<!--			<li><a href="" class="btn btn-warning ">Change E-mail</a></li> &nbsp-->#}
+{#<!--			<li><a href="" class="btn btn-warning">Sign Out</a></li> &nbsp-->#}
+			<li class="nav-item dropdown">
+			  <a style="background: antiquewhite;color: black" class="nav-link dropdown-toggle" href="#" id="userMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+				{{ user.username }}
+			  </a>
+			  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
+				<a class="dropdown-item" href="/dashboard">My account</a>
+				<a class="dropdown-item" href="/accounts/password/change/">Change password</a>
+				<div class="dropdown-divider"></div>
+				<a class="dropdown-item" href="/accounts/logout">Log out</a>
+			  </div>
+        	</li>
+			{% block profile_pic %}
+			{%  endblock %}
+			{% else %}
+			<div class="form-inline my-2 my-lg-0">
+	     	<a href="{% url 'account_login' %}"class="btn btn-warning" >Sign In</a> &nbsp
+			<a href="{% url 'account_signup' %}"class="btn btn-warning">Sign Up</a>
+			{% endif %}
+{#	     	<a href="/cart">#}
+{#	    		<img  id="cart-icon" src="{% static 'images/cart.png' %}">#}
+{#	    	</a>#}
+{#	    	<p id="cart-total">{{cartItems}}</p>#}
+
+
+			</div>
+		     </ul>
+		  </div>
+            </nav>
+
+{% if user.is_authenticated %}
+    <div class="sidebar">
+      <a href="/stock">Stock</a>
+      <a href="/import">Import from File</a>
+      <a href="/export">Export Data</a>
+      <a href="/list_history">History</a>
+      <a href="/performance/chart/">Reports and Analysis</a>
+    </div>
+{% endif %}

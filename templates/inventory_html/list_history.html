@@ -1,0 +1,69 @@
+{% extends "inventory_html/main.html" %}
+
+{% load static %}
+{% block sidebar %}
+
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+</head>
+<style>
+label {
+    color: white !important;
+    background: black !important;
+}
+.dataTables_info{
+    color: white !important;
+    background: black !important;
+
+}
+.text-warning{
+    color: #d22222!important;
+    text-align: center;
+}
+</style>
+{% if user.is_authenticated %}
+{#<h2 class="text-warning">Welcome, {{ user.get_username }}. Thanks for logging in.</h2>#}
+{% else %}
+<p class="text-warning">Welcome, new user. Please log in.</p>
+{% endif %}
+<div class="container" align="center" style="margin-left:15%;">
+    <h3 class="text-warning">Your Stock History</h3>
+   <div class="display_table">
+        <table class='table'>
+          <thead>
+            <tr>
+              <th>COUNT</th>
+              <th>ID</th>
+{#              <th>CATEGORY</th>#}
+              <th>ITEM NAME</th>
+              <th>QUANTITY IN STORE</th>
+              <th>ISSUE QUANTITY</th>
+              <th>ISSUE To</th>
+              <th>ISSUE By</th>
+              <th>RECEIVE QUANTITY</th>
+              <th>RECEIVE By</th>
+              <th>LAST UPDATED</th>
+            </tr>
+          </thead>
+        {% for instance in queryset %}
+            <tr>
+
+              <td>{{forloop.counter}}</td>
+              <td>{{instance.id}}</td>
+{#              <td>{{instance.category}}</td>#}
+              <td>{{instance.item_name}}</td>
+              <td>{{instance.quantity}}</td>
+              <td>{{instance.issue_quantity}}</td>
+              <td>{{instance.issue_to}}</td>
+              <td>{{instance.issue_by}}</td>
+              <td>{{instance.receive_quantity}}</td>
+              <td>{{instance.receive_by}}</td>
+              <td>{{instance.last_updated}}</td>
+            </tr>
+        {% endfor %}
+      </table>
+    </div>
+<a class="btn btn-danger btn-lg" href="/delete_history">Clear All History</a>
+</div>
+
+{% endblock %}

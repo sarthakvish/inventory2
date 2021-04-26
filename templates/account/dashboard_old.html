@@ -1,0 +1,51 @@
+{% extends "account/base.html" %}
+{% load static %}
+
+
+
+
+<!---->
+<html lang="en">
+{% block content %}
+
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>hello welcome you</h1>
+<form method="post" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{form.as_p}}
+
+
+    <input type="submit" name="upload">
+
+</form>
+{% if img_obj %}
+  <h3>Succesfully uploaded</h3>
+  <img src="{{ img_obj.profile_pic.url}}" alt="connect" style="max-height:300px">
+{% endif %}
+
+
+
+<!--<table>-->
+<!--    <thead>-->
+<!--        <th>Username</th>-->
+<!--        <th>Email</th>-->
+<!--        <th>firstname</th>-->
+<!--        <th>lastname</th>-->
+<!--    </thead>-->
+<!--    {% for emp in user_list %}-->
+<!--        <tr>-->
+<!--            <td>{{emp.username}}</td>-->
+<!--            <td>{{emp.email_address}}</td>-->
+<!--            <td>{{emp.first_name}}</td>-->
+<!--            <td>{{emp.last_name}}</td>-->
+<!--        </tr>-->
+<!--    {% endfor %}-->
+<!--</table>-->
+</body>
+{% endblock %}
+</html>

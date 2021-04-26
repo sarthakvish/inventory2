@@ -1,0 +1,10 @@
+{% extends "datascience_html/base.html" %}
+
+{% block title %}{% endblock %}
+{% block content %}
+    <form method="post" class="ui form">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" class="ui button positive mtop">Add sales data</button>
+    </form>
+{% endblock %}

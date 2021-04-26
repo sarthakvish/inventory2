@@ -1,0 +1,44 @@
+{% extends 'inventory_html/main.html' %}
+
+{% load static %}
+{% block sidebar %}
+
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+</head>
+<style>
+label {
+    color: white !important;
+    background: black !important;
+}
+.dataTables_info{
+    color: white !important;
+    background: black !important;
+
+}
+.text-warning{
+    color: #d22222!important;
+    text-align: center;
+}
+</style>
+
+{% endblock %}
+{% block content %}
+<div class="row">
+<div class="col-md-12">
+<form method="post" enctype="multipart/form-data" style="padding-left:8%;">
+    {% csrf_token %}
+    <h3>Export Data</h3>
+    <p>exporting from database</p>
+    <p>Please select format of file.</p>
+    <select name="file-format" class="form-control my-3">
+        <option selected>Choose format...</option>
+        <option>CSV</option>
+        <option>JSON</option>
+        <option>XLS (Excel)</option>
+      </select>
+    <button class="btn btn-primary" type="submit">Export</button>
+  </form>
+</div>
+</div>
+  {% endblock %}

@@ -1,0 +1,121 @@
+{% extends "inventory_html/main.html" %}
+
+{% load static %}
+{% block sidebar %}
+
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+</head>
+<style>
+label {
+    color: white !important;
+    background: black !important;
+}
+.dataTables_info{
+    color: white !important;
+    background: black !important;
+
+}
+.text-warning{
+    color: #d22222!important;
+    text-align: center;
+
+}
+.table-light tbody+tbody, .table-light td, .table-light th, .table-light thead th {
+    border: 2px solid black;
+}
+
+.btn:not(:disabled):not(.disabled) {
+    cursor: pointer;
+    border-radius: 30px;
+    width: 91%;
+}
+#table_id_length{
+    text-align: initial !important;
+    height: 0px !important;
+    font-size: 20px !important;
+    font-family: cursive;
+}
+#table_id_info{
+    font-size: 20px;
+    border-radius: 5px;
+    width: 30%;
+    font-family: cursive;
+}
+#table_id_filter{
+    text-align: end;
+    font-family: cursive;
+}
+#table_id_length > label{
+    padding: 3px !important;
+    border-radius: 8px !important;
+    font-size: 20px;
+}
+#table_id_filter > label{
+    padding: 3px !important;
+    border-radius: 8px !important;
+}
+.paginate_button {
+        border-radius: 30px;
+    font-size: 20px;
+    color: black;
+    font-family: cursive;
+}
+
+</style>
+
+{% if user.is_authenticated %}
+<h2 class="text-warning">Welcome, {{ user.get_username }}. Thanks for logging in.</h2>
+{% else %}
+<p class="text-warning">Welcome, new user. Please log in.</p>
+{% endif %}
+<div class="container" align="center" style="margin-left:15%;">
+    <h3 class="text-warning">List of Product Available in Stock</h3>
+    <table class="table table-light table-hover text-primary" border="2px" id="table_id" style="width:100%;">
+
+        <thead>
+{#            <th>Item Image</th>#}
+            <th>Item Name</th>
+            <th>Item Category</th>
+            <th>Item Quantity</th>
+            <th>Measurement Unit</th>
+            <th>Reorder Level</th>
+            <th>Timestamp</th>
+            <th>Last Updated</th>
+            <th>Created By</th>
+            <th>Manage Stock</th>
+            <th>Actions</th>
+        </thead>
+        {% for product in stock %}
+         <tr>
+{#             <td><img width="70px" height="70px" src="{{ product.product_image.url }}" /></td>#}
+             <td>{{ product.item_name }}</td>
+             <td>{{ product.category }}</td>
+             <td>
+                 {% if product.quantity <= product.reorder_level %}
+                 <div style="background-color: orangered;">
+                     <a  style="color: black;" href="/receive_items/{{product.id}}">{{ product.quantity }}</a>
+                 </div>
+                 {% else %}{{ product.quantity }}
+                 {% endif %}
+             </td>
+             <td>{{ product.measurement_unit }}</td>
+             <td><a href="/reorder_level/{{product.id}}">{{product.reorder_level}}</a></td>
+             <td>{{ product.timestamp}}</td>
+             <td>{{ product.last_updated }}</td>
+             <td>{{ product.created_by }}</td>
+             <td><a class="btn btn-dark mb-1" href="/receive_items/{{product.id}}">Recieve Item</a> <a class="btn btn-warning" href="/issue_items/{{product.id}}">Issue Item</a></td>
+             <td><a class="btn btn-info mb-1" href="/update_product/{{product.id}}">Update</a><a class="btn btn-danger" href="/delete_product/{{product.id}}">Delete</a></td>
+
+        </tr>
+        {% endfor %}
+
+        </table>
+        <br><br>
+        <a class="btn btn-success btn-lg" href="/add_product" style="width: 30%;">Add New Product</a>
+
+</div>
+
+
+
+{% endblock %}

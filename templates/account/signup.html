@@ -1,0 +1,30 @@
+{% extends "inventory_html/main.html" %}
+{% load crispy_forms_filters %}
+{% load crispy_forms_tags %}
+
+{% load i18n %}
+
+{% block head_title %}{% trans "Signup" %}{% endblock %}
+
+{% block content %}
+
+
+
+<div align="center" style="width:100%">
+  <div class="card" style="width:40%; text-align:left;" >
+  <div class="card-header"><h4>{% trans "Sign Up" %}</h4></div>
+  <div class="card-body">
+<form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+  {% csrf_token %}
+  {{ form|crispy }}
+  {% if redirect_field_value %}
+  <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+  {% endif %}
+  <button class="btn btn-success" type="submit">{% trans "Sign Up" %} &raquo;</button>
+  <p>{% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}</p>
+</form>
+  </div>
+</div>
+</div>
+
+{% endblock %}
