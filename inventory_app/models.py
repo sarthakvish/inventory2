@@ -3,49 +3,80 @@ from django.db import models
 from django.contrib.auth.models import User, AbstractUser, BaseUserManager
 from django.utils.translation import ugettext_lazy as _
 #
-# class CustomUserManager(BaseUserManager):
-#     """Define a model manager for User model with no username field."""
-#
-#     use_in_migrations = True
-#
-#     def _create_user(self, phone, password, **extra_fields):
-#         """Create and save a User with the given phone and password."""
-#         if not phone:
-#             raise ValueError('The given phone must be set')
-#         self.phone = phone
-#         user = self.model(phone=phone, **extra_fields)
-#         user.set_password(password)
-#         user.save(using=self._db)
-#         return user
-#
-#     def create_user(self, phone, password=None, **extra_fields):
-#         """Create and save a regular User with the given phone and password."""
-#         extra_fields.setdefault('is_staff', False)
-#         extra_fields.setdefault('is_superuser', False)
-#         return self._create_user(phone, password, **extra_fields)
-#
-#     def create_superuser(self, phone, password, **extra_fields):
-#         """Create and save a SuperUser with the given phone and password."""
-#         extra_fields.setdefault('is_staff', True)
-#         extra_fields.setdefault('is_superuser', True)
-#
-#         if extra_fields.get('is_staff') is not True:
-#             raise ValueError('Superuser must have is_staff=True.')
-#         if extra_fields.get('is_superuser') is not True:
-#             raise ValueError('Superuser must have is_superuser=True.')
-#
-#         return self._create_user(phone, password, **extra_fields)
-# class CustomUser(AbstractUser):
-#     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,10}$',
-#                                  message="Phone number must be entered in the format: '+999999999'. Up to 10 digits allowed.")
-#     phone = models.CharField(_('phone'),validators=[phone_regex], max_length=10,blank=False,
-#                                     null=False)  # validators should be a list
-#     USERNAME_FIELD = 'username'
-#     REQUIRED_FIELDS = ['phone']
-#
-#     objects = CustomUserManager()
-#     def __str__(self):
-#         return self.username
+class CustomUserManager(BaseUserManager):
+    """Define a model manager for User model with no username field."""
+
+    use_in_migrations = True
+
+    def _create_user(self, phone, password, **extra_fields):
+        """Create and save a User with the given phone and password."""
+        if not phone:
+            raise ValueError('The given phone must be set')
+        self.phone = phone
+        user = self.model(phone=phone, **extra_fields)
+        user.set_password(password)
+        user.save(using=self._db)
+        return user
+
+    def create_user(self, phone, password=None, **extra_fields):
+        """Create and save a regular User with the given phone and password."""
+        extra_fields.setdefault('is_staff', False)
+        extra_fields.setdefault('is_superuser', False)
+        return self._create_user(phone, password, **extra_fields)
+
+    def create_superuser(self, phone, password, **extra_fields):
+        """Create and save a SuperUser with the given phone and password."""
+        extra_fields.setdefault('is_staff', True)
+        extra_fields.setdefault('is_superuser', True)
+
+        if extra_fields.get('is_staff') is not True:
+            raise ValueError('Superuser must have is_staff=True.')
+        if extra_fields.get('is_superuser') is not True:
+            raise ValueError('Superuser must have is_superuser=True.')
+
+        return self._create_user(phone, password, **extra_fields)
+class CustomUser(AbstractUser):
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,10}$',
+                                 message="Phone number must be entered in the format: '+999999999'. Up to 10 digits allowed.")
+    phone = models.CharField(_('phone'),validators=[phone_regex],unique=True, max_length=10,blank=False,
+                                    null=False)  # validators should be a list
+
+    user_type_choices = ((1, "Admin"), (2, "Staff"), (3, "Merchant"), (4, "Customer"))
+    user_type = models.CharField(max_length=255, choices=user_type_choices, default=1)
+
+    USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['phone']
+
+    objects = CustomUserManager()
+    def __str__(self):
+        return self.username
+
+# models for different type of users (Admin, merchant, staff, customer)
+class AdminUser(models.Model):
+    profile_pic=models.FileField(default="")
+    auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+class StaffUser(models.Model):
+    profile_pic=models.FileField(default="")
+    auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    created_at=models.DateTimeField(auto_now_add=True)
+
+class MerchantUser(models.Model):
+    auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    profile_pic=models.FileField(default="")
+    company_name=models.CharField(max_length=255)
+    gst_details=models.CharField(max_length=255)
+    address=models.TextField()
+    is_added_by_admin=models.BooleanField(default=False)
+    created_at=models.DateTimeField(auto_now_add=True)
+    objects=models.Manager()
+
+
+class CustomerUser(models.Model):
+    auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    profile_pic=models.FileField(default="")
+    created_at=models.DateTimeField(auto_now_add=True)
 # models for Normal app.
 class Stock(models.Model):
     unit = 'un'

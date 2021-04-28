@@ -1,0 +1,9 @@
+Django
+pillow
+django-allauth
+pandas
+seaborn
+matplotlib
+django-crispy-forms
+PyMySQL
+django-import-export
