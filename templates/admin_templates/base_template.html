@@ -27,6 +27,16 @@
 
   {% block custom_css %}
   {% endblock custom_css %}
+{% if request.user.is_anonymous %}
+    <style>
+        .navbar {
+            left: 10px;
+        }
+        .main-content {
+            padding-left: 0!important;
+        }
+    </style>
+{% endif %}
 
   <style>
   ul.errorlist{
@@ -42,8 +52,9 @@
   <div id="app">
     <div class="main-wrapper main-wrapper-1">
       {% include 'admin_templates/navbar.html' %}
-      {% include 'admin_templates/sidebar.html' with id=form.instance.id %}
-
+        {% if user.is_authenticated %}
+            {% include 'admin_templates/sidebar.html' with id=form.instance.id %}
+        {% endif %}
 
       <!-- Main Content -->
       <div class="main-content">

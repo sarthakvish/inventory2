@@ -1,10 +1,10 @@
-{% extends "inventory_html/main.html" %}
+{% extends "admin_templates/base_template.html" %}
 
 {% load i18n %}
 
 {% block head_title %}{% trans "E-mail Addresses" %}{% endblock %}
 
-{% block content %}
+{% block page_content %}
     <h1>{% trans "E-mail Addresses" %}</h1>
 {% if user.emailaddress_set.all %}
 <p>{% trans 'The following e-mail addresses are associated with your account:' %}</p>
