@@ -1,7 +1,7 @@
-{% extends "datascience_html/base.html" %}
+{% extends 'admin_templates/base_template.html' %}
 
 {% block title %}{% endblock %}
-{% block content %}
+{% block page_content %}
     <form method="post" class="ui form">
         {% csrf_token %}
         {{ form }}

@@ -106,11 +106,10 @@ class MerchantUserListView(ListView):
         context["all_table_fields"]=MerchantUser._meta.get_fields()
         return context
 
-
 class MerchantUserCreateView(SuccessMessageMixin,CreateView):
     template_name="admin_templates/merchant_create.html"
     model=CustomUser
-    fields=["first_name","last_name","email","username","password"]
+    fields=["first_name","last_name","phone", "email","username","password"]
 
     def form_valid(self,form):
 
@@ -181,7 +180,7 @@ class MerchantUserUpdateView(SuccessMessageMixin,UpdateView):
         messages.success(self.request,"Merchant User Updated")
         return HttpResponseRedirect(reverse("merchant_list"))
 
-        
+
 
 class ProductView(View):
     def get(self,request,*args,**kwargs):
@@ -226,7 +225,7 @@ class ProductView(View):
             product_media=ProductMedia(product_id=product,media_type=media_type_list[i],media_content=media_url)
             product_media.save()
             i=i+1
-        
+
         j=0
         for title_title in title_title_list:
             product_details=ProductDetails(title=title_title,title_details=title_details_list[j],product_id=product)
@@ -236,13 +235,13 @@ class ProductView(View):
         for about in about_title_list:
             product_about=ProductAbout(title=about,product_id=product)
             product_about.save()
-        
+
         product_tags_list=product_tags.split(",")
 
         for product_tag in product_tags_list:
             product_tag_obj=ProductTags(product_id=product,title=product_tag)
             product_tag_obj.save()
-        
+
         product_transaction=ProductTransaction(product_id=product,transaction_type=1,transaction_product_count=in_stock_total,transaction_description="Intially Item Added in Stocks")
         product_transaction.save()
         return HttpResponse("OK")
