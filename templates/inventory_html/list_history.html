@@ -2,31 +2,49 @@
 
 {% load static %}
 {% block page_content %}
-{##}
+
 {#<head>#}
 {#<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">#}
 {#</head>#}
-{#<style>#}
-{#label {#}
-{#    color: white !important;#}
-{#    background: black !important;#}
-{#}#}
-{#.dataTables_info{#}
-{#    color: white !important;#}
-{#    background: black !important;#}
-{##}
-{#}#}
-{#.text-warning{#}
-{#    color: #d22222!important;#}
-{#    text-align: center;#}
-{#}#}
-{#</style>#}
+<style>
+  .table:not(.table-sm):not(.table-md):not(.dataTable) th {
+    padding:9px 15px!important;
+    height:60px;
+    vertical-align: middle;
+    text-align:center;
+    }
+    .table:not(.table-sm):not(.table-md):not(.dataTable) td, .table:not(.table-sm):not(.table-md):not(.dataTable) th {
+    padding: 9px 15px!important;
+    height: 60px;
+    vertical-align: middle;
+    text-align:center;
+
+    }
+    .table {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border: 1px solid darkgrey;
+    height: 150px;
+    box-shadow: 0px 0px 3px darkgray;
+    }
+    .btn-danger{
+        width: 30%!important;
+        font-size:18px!important;
+        }
+        .text-warning{
+         color: #0a41dda8 !important;
+         font-size: 27px;
+         margin-bottom: 1rem;
+         }
+</style>
+
 {% if user.is_authenticated %}
 {#<h2 class="text-warning">Welcome, {{ user.get_username }}. Thanks for logging in.</h2>#}
 {% else %}
 <p class="text-warning">Welcome, new user. Please log in.</p>
 {% endif %}
-<div class="container" align="center" style="margin-left:15%;">
+<div class="container" align="center">
     <h3 class="text-warning">Your Stock History</h3>
    <div class="display_table">
         <table class='table'>
@@ -34,14 +52,14 @@
             <tr>
               <th>COUNT</th>
               <th>ID</th>
-{#              <th>CATEGORY</th>#}
+{#             <th>CATEGORY</th>#}
               <th>ITEM NAME</th>
               <th>QUANTITY IN STORE</th>
               <th>ISSUE QUANTITY</th>
-              <th>ISSUE To</th>
-              <th>ISSUE By</th>
+              <th>ISSUE TO</th>
+              <th>ISSUE BY</th>
               <th>RECEIVE QUANTITY</th>
-              <th>RECEIVE By</th>
+              <th>RECEIVE BY</th>
               <th>LAST UPDATED</th>
             </tr>
           </thead>

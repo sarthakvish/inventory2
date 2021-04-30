@@ -7,6 +7,21 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
 </head>
 <style>
+.style-container{
+    max-width: 1215px!important;
+    margin: 1rem 0rem;
+    }
+    .table:not(.table-sm):not(.table-md):not(.dataTable) th {
+    padding:9px 15px!important;
+    height:60px;
+    vertical-align: middle;
+    }
+    .table:not(.table-sm):not(.table-md):not(.dataTable) td, .table:not(.table-sm):not(.table-md):not(.dataTable) th {
+    padding: 9px 15px!important;
+    height: 60px;
+    vertical-align: middle;
+
+    }
 label {
     color: white !important;
     background: black !important;
@@ -17,9 +32,14 @@ label {
 
 }
 .text-warning{
-    color: #d22222!important;
-    text-align: center;
-
+        color: #4e4e55!important;
+        text-align: center;
+}
+.list-product{
+           color: red;
+         text-align: center;
+         margin: 1rem 0rem;
+         font-size: 22px;
 }
 .table-light tbody+tbody, .table-light td, .table-light th, .table-light thead th {
     border: 2px solid black;
@@ -28,7 +48,7 @@ label {
 .btn:not(:disabled):not(.disabled) {
     cursor: pointer;
     border-radius: 30px;
-    width: 91%;
+    width: 100%;
 }
 #table_id_length{
     text-align: initial !important;
@@ -61,6 +81,16 @@ label {
     color: black;
     font-family: cursive;
 }
+.btn-primary-color{
+    width: 30%!important;
+    box-shadow: 0 2px 6px #acb5f6!important;
+    background-color: #6777ef!important;
+    border-color: #6777ef!important;
+    font-size: 18px!important;
+    color:white;
+    border-radius: 4px!important;
+
+    }
 
 </style>
 
@@ -69,12 +99,12 @@ label {
 {% else %}
 <p class="text-warning">Welcome, new user. Please log in.</p>
 {% endif %}
-<div class="container" align="center" style="margin-left:15%;">
-    <h3 class="text-warning">List of Product Available in Stock</h3>
-    <table class="table table-light table-hover text-primary" border="2px" id="table_id" style="width:100%;">
+<div class="container style-container" align="center">
+    <h3 class="list-product">List of Product Available in Stock</h3>
+    <table class="table" border="2px" id="table_id">
 
         <thead>
-{#            <th>Item Image</th>#}
+
             <th>Item Name</th>
             <th>Item Category</th>
             <th>Item Quantity</th>
@@ -111,8 +141,8 @@ label {
         {% endfor %}
 
         </table>
-        <br><br>
-        <a class="btn btn-success btn-lg" href="/add_product" style="width: 30%;">Add New Product</a>
+        <br>
+        <a class="btn btn-primary-color btn-lg" href="/add_product">Add New Product</a>
 
 </div>
 

@@ -1,11 +1,22 @@
 {% extends 'admin_templates/base_template.html' %}
 
 {% block page_content %}
+<style>
+ .row{
+    border: 1px solid darkgray;
+    box-shadow: 1px 1px 3px darkgrey;
+    margin: 2rem 2rem;
+    padding: 1rem 3rem;
+}
+.form-data{
+padding:0rem;
+}
+</style>
 
 {#<p>importing to database</p>#}
 <div class="row">
 <div class="col-md-12">
-<form method="post" enctype="multipart/form-data" style="padding-left:8%;">
+<form method="post" enctype="multipart/form-data" class="form-data-style">
     <h3>Import Data from File</h3>
     {% csrf_token %}
     <input type="file" name="importData">

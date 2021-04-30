@@ -17,12 +17,20 @@
                 border-bottom: 2px solid white;
         }
 
-        .bg-dark {
-        background-color: #605b88 !important;
+
 }
         .navbar-brand{
             font-size: 2rem;
-            font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+            font-family: math!important;
+            color: white!important;
+}
+        }
+        .marquee-tag{
+            color: white;
+            font-size: 19px;
+            position: relative;
+            top: .9rem;
+            width: 100%;
         }
 		.sticky-footer{
    position: absolute;
@@ -51,9 +59,9 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	  <a class="navbar-brand" href="/stock">Kolentory</a>
-      <marquee width="60%" direction="right" height="50px" style="color: white">
-Let's manage Your inventory with us!
-</marquee>
+      <marquee width="60%" direction="right" height="50px" class="marquee-tag">
+       Let's manage Your inventory with us!
+      </marquee>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
