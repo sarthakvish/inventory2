@@ -1,11 +1,13 @@
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
+from django.urls import reverse
 from tablib import Dataset
 
 from inventory_app.models import Stock, StockHistory
 from inventory_app.forms import StockCreateForm, ReceiveForm, IssueForm, ReorderLevelForm
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 import csv
 
 
@@ -200,3 +202,33 @@ def list_invoice(request):
         "queryset": queryset,
     }
     return render(request, "inventory_html/list_invoice.html", context)
+
+# Admin login logout home related views
+
+
+# Create your views here.
+def demoPage(request):
+    return HttpResponse("demo Page")
+
+def demoPageTemplate(request):
+    return render(request,"demo.html")
+
+def adminLogin(request):
+    return render(request,"admin_templates/signin.html")
+
+def adminLoginProcess(request):
+    username=request.POST.get("username")
+    password=request.POST.get("password")
+
+    user=authenticate(request=request,username=username,password=password)
+    if user is not None:
+        login(request=request,user=user)
+        return HttpResponseRedirect(reverse("admin_home"))
+    else:
+        messages.error(request,"Error in Login! Invalid Login Details!")
+        return HttpResponseRedirect(reverse("admin_login"))
+
+def adminLogoutProcess(request):
+    logout(request)
+    messages.success(request,"Logout Successfully!")
+    return HttpResponseRedirect(reverse("admin_login"))

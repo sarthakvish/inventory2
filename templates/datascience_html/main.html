@@ -1,4 +1,5 @@
 {% extends "datascience_html/base.html" %}
+{% load static %}
 
 {% block title %}performance{% endblock %}
 
@@ -76,6 +77,5 @@
         <br>
         <a href={% url "datascience:add_purchase" %}><button class="ui positive button">Add Records</button></a>
     </div>
-
 
 {% endblock %}
