@@ -1,26 +1,26 @@
-{% extends "inventory_html/main.html" %}
+{% extends "admin_templates/base_template.html" %}
 
 {% load static %}
-{% block sidebar %}
-
-<head>
-<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
-</head>
-<style>
-label {
-    color: white !important;
-    background: black !important;
-}
-.dataTables_info{
-    color: white !important;
-    background: black !important;
-
-}
-.text-warning{
-    color: #d22222!important;
-    text-align: center;
-}
-</style>
+{% block page_content %}
+{##}
+{#<head>#}
+{#<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">#}
+{#</head>#}
+{#<style>#}
+{#label {#}
+{#    color: white !important;#}
+{#    background: black !important;#}
+{#}#}
+{#.dataTables_info{#}
+{#    color: white !important;#}
+{#    background: black !important;#}
+{##}
+{#}#}
+{#.text-warning{#}
+{#    color: #d22222!important;#}
+{#    text-align: center;#}
+{#}#}
+{#</style>#}
 {% if user.is_authenticated %}
 {#<h2 class="text-warning">Welcome, {{ user.get_username }}. Thanks for logging in.</h2>#}
 {% else %}

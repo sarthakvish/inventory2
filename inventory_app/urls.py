@@ -1,16 +1,11 @@
 from django.urls import path
-from . import views
-
+from . import views, AdminViews
 
 urlpatterns = [
-    # path('store/', views.store_page_view, name='store'),
-    # path('cart/', views.cart_page_view, name='cart'),
-    # path('checkout/', views.checkout_page_view, name='checkout'),
-    path('stock/', views.stock_page_view),
-    path('add_product/', views.add_product_page_view),
-    path('update_product/<id>', views.update_product_view),
-    path('delete_product/<id>', views.delete_product_view),
-    # path('update_item/', views.updateItem, name='update_item'),
+    path('stock/', views.stock_page_view, name='stock'),
+    path('add_product/', views.add_product_page_view, name='add_product'),
+    path('update_product/<id>', views.update_product_view, name='update_product'),
+    path('delete_product/<id>', views.delete_product_view, name='delete_product'),
     path('issue_items/<id>/', views.issue_items, name="issue_items"),
     path('receive_items/<id>/', views.receive_items, name="receive_items"),
     path('reorder_level/<id>/', views.reorder_level, name="reorder_level"),
@@ -22,4 +17,22 @@ urlpatterns = [
     # urls for Invoice management
     path('add_invoice/', views.add_invoice, name='add_invoice'),
     path('list_invoice/', views.list_invoice, name='list_invoice'),
+
+    # url for Adminviews.py file for merchant Merchant User
+
+    path('merchant_create',AdminViews.MerchantUserCreateView.as_view(),name="merchant_create"),
+    path('merchant_list',AdminViews.MerchantUserListView.as_view(),name="merchant_list"),
+    path('merchant_update/<slug:pk>',AdminViews.MerchantUserUpdateView.as_view(),name="merchant_update"),
+
+
+    # genral admin
+
+    path('admin/', views.adminLogin, name="admin_login"),
+    path('demo', views.demoPage),
+    path('demoPage', views.demoPageTemplate),
+    path('admin_login_process', views.adminLoginProcess, name="admin_login_process"),
+    path('admin_logout_process', views.adminLogoutProcess, name="admin_logout_process"),
+
+    # PAGE FOR ADMIN
+    path('admin_home', AdminViews.admin_home, name="admin_home")
 ]
