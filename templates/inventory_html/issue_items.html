@@ -1,13 +1,21 @@
 
 {% extends "admin_templates/base_template.html" %}
+{% block custom_css %}
+<style>
+  .form-control:not(.form-control-sm):not(.form-control-lg) {
+     box-shadow: 1px 1px 5px grey!important;
+     }
+</style>
+{% endblock custom_css %}
+
 {% load crispy_forms_filters %}
+
 {% load crispy_forms_tags %}
-
 {% load static %}
-
 {% block page_content %}
+
 <div align="center" style="width:100%" >
-  <div class="card" style="width:40%; text-align:left;  margin-top: 20px; margin-bottom: 80px;" >
+  <div class="card" style="width:50%; text-align:left;  margin-top: 20px; margin-bottom: 80px;box-shadow: 0px 1px 8px grey;" >
   <div class="card-header"><h4>Fill Out the Quantity Details Here</h4></div>
   <div class="card-body">
     <form class="login" method="POST" enctype="multipart/form-data">

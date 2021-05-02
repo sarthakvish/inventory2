@@ -7,6 +7,9 @@
     <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css'%}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 {#	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.24/css/jquery.dataTables.css">#}
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 
@@ -17,12 +20,20 @@
                 border-bottom: 2px solid white;
         }
 
-        .bg-dark {
-        background-color: #605b88 !important;
+
 }
         .navbar-brand{
             font-size: 2rem;
-            font-family: "Bitstream Vera Sans Mono", Monaco, "Courier New", Courier, monospace;
+            font-family: math!important;
+            color: white!important;
+}
+        }
+        .marquee-tag{
+            color: white;
+            font-size: 19px;
+            position: relative;
+            top: .9rem;
+            width: 100%;
         }
 		.sticky-footer{
    position: absolute;
@@ -51,9 +62,9 @@
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 	  <a class="navbar-brand" href="/stock">Kolentory</a>
-      <marquee width="60%" direction="right" height="50px" style="color: white">
-Let's manage Your inventory with us!
-</marquee>
+      <marquee width="60%" direction="right" height="50px" class="marquee-tag">
+       Let's manage Your inventory with us!
+      </marquee>
 	  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>

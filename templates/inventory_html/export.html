@@ -20,11 +20,27 @@ label {
     color: #d22222!important;
     text-align: center;
 }
+.row{
+    border: 1px solid darkgray;
+    box-shadow: 1px 1px 3px darkgrey;
+    margin: 2rem 2rem;
+    padding: 1rem 3rem;
+}
+.form-data{
+padding:0rem;
+}
+  @media (max-width:768px){
+   .row {
+      margin: 0rem 0rem!important;
+      padding: 1rem 0rem!important;
+      }
+     }
+
 </style>
 
 <div class="row">
 <div class="col-md-12">
-<form method="post" enctype="multipart/form-data" style="padding-left:8%;">
+<form method="post" enctype="multipart/form-data" class="form-data">
     {% csrf_token %}
     <h3>Export Data</h3>
     <p>exporting from database</p>

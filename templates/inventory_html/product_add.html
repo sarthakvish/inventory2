@@ -1,13 +1,35 @@
-
 {% extends "admin_templates/base_template.html" %}
+{% block custom_css %}
+<style>
+  .card-header {
+    background-color: black!important;
+    color: white!important;
+    border: 2px solid white!important;
+    }
+    .form-group > label {
+     font-size: 16px!important;
+     }
+     .form-check-label {
+      font-size: 16px!important;
+      }
+      .form-control:not(.form-control-sm):not(.form-control-lg) {
+      box-shadow: 1px 1px 5px darkolivegreen;
+      }
+
+
+
+</style>
+{% endblock custom_css %}
 {% load crispy_forms_filters %}
 {% load crispy_forms_tags %}
 
 {% load static %}
 
+
+
 {% block page_content %}
 <div align="center" style="width:100%" >
-  <div class="card" style="width:40%; text-align:left;  margin-top: 20px; margin-bottom: 80px;" >
+  <div class="card" style="width:50%; text-align:left;  margin-top: 20px; margin-bottom: 80px;box-shadow: 0px 1px 8px grey;!important" >
   <div class="card-header"><h4>Fill Out the Details of Product Here</h4></div>
   <div class="card-body">
     <form class="login" method="POST" enctype="multipart/form-data">
