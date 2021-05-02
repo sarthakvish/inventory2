@@ -1,9 +1,9 @@
-{% extends "datascience_html/base.html" %}
+{% extends 'admin_templates/base_template.html' %}
 {% load static %}
-
 {% block title %}performance{% endblock %}
 
-{% block content %}
+{% block page_content %}
+
 {#    {{ products|safe }}#}
 <div class="ui modal mymodal">
     <div class="header"><h1>Price Data</h1></div>
@@ -77,5 +77,18 @@
         <br>
         <a href={% url "datascience:add_purchase" %}><button class="ui positive button">Add Records</button></a>
     </div>
+</div>
+<script>
+$('.ui.dropdown').dropdown();
+$(".close.icon").click(function(){
+  $(this).parent().hide();
+});
 
+ $(document).ready(function(){
+          $('#modal-btn').click(function(){
+            $('.ui.modal').modal('show');
+          });
+    });
+
+</script>
 {% endblock %}

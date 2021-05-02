@@ -7,11 +7,24 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.messages.views import messages
 from django.urls import reverse
 from django.http import HttpResponseRedirect,HttpResponse
-from django.db.models import Q
+from django.db.models import Q, Sum, F
+from inventory_app.models import Stock, StockHistory, MerchantUser
 
 @login_required(login_url="/admin/")
 def admin_home(request):
-    return render(request,"admin_templates/home.html")
+    stock_count=Stock.objects.all().count()
+    stock_reorder_count=Stock.objects.filter(quantity__lte=F('reorder_level')).count()
+    total_issue_quantity= StockHistory.objects.aggregate(Sum('issue_quantity'))['issue_quantity__sum']
+    total_receive_quantity = StockHistory.objects.aggregate(Sum('receive_quantity'))['receive_quantity__sum']
+    total_merchant_user= MerchantUser.objects.all().count()
+    context={
+        'stock_count':stock_count,
+        'issue_quantity': total_issue_quantity,
+        'receive_quantity': total_receive_quantity,
+        'total_merchant_user': total_merchant_user,
+        'stock_reorder_count': stock_reorder_count,
+    }
+    return render(request,"admin_templates/admin_home.html", context)
 
 # class CategoriesListView(ListView):
 #     model=Categories
@@ -106,11 +119,10 @@ class MerchantUserListView(ListView):
         context["all_table_fields"]=MerchantUser._meta.get_fields()
         return context
 
-
 class MerchantUserCreateView(SuccessMessageMixin,CreateView):
     template_name="admin_templates/merchant_create.html"
     model=CustomUser
-    fields=["first_name","last_name","email","username","password"]
+    fields=["first_name","last_name","phone", "email","username","password"]
 
     def form_valid(self,form):
 
@@ -181,7 +193,7 @@ class MerchantUserUpdateView(SuccessMessageMixin,UpdateView):
         messages.success(self.request,"Merchant User Updated")
         return HttpResponseRedirect(reverse("merchant_list"))
 
-        
+
 
 class ProductView(View):
     def get(self,request,*args,**kwargs):
@@ -226,7 +238,7 @@ class ProductView(View):
             product_media=ProductMedia(product_id=product,media_type=media_type_list[i],media_content=media_url)
             product_media.save()
             i=i+1
-        
+
         j=0
         for title_title in title_title_list:
             product_details=ProductDetails(title=title_title,title_details=title_details_list[j],product_id=product)
@@ -236,13 +248,13 @@ class ProductView(View):
         for about in about_title_list:
             product_about=ProductAbout(title=about,product_id=product)
             product_about.save()
-        
+
         product_tags_list=product_tags.split(",")
 
         for product_tag in product_tags_list:
             product_tag_obj=ProductTags(product_id=product,title=product_tag)
             product_tag_obj.save()
-        
+
         product_transaction=ProductTransaction(product_id=product,transaction_type=1,transaction_product_count=in_stock_total,transaction_description="Intially Item Added in Stocks")
         product_transaction.save()
         return HttpResponse("OK")
