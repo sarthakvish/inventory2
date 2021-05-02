@@ -1,3 +1,12 @@
+
+{% extends 'admin_templates/base_template.html' %}
+
+
+
+{% block title %}
+Merchant User List
+{% endblock title %}
+{% block custom_css %}
 <style>
     .section-header{
      box-shadow: 0px 1px 4px darkblue !important;
@@ -5,26 +14,14 @@
      .card-body {
       box-shadow: 1px 1px 4px darkolivegreen!important;
 </style>
-
-
-
-
-{% extends 'admin_templates/base_template.html' %}
-
-
-{% block title %}
-Merchant User List
-{% endblock title %}
-
-
-{% block custom_css %}
 {% endblock custom_css %}
-
 {% block page_title %}
 Merchant User List
 {% endblock page_title %}
 
 {% block page_content %}
+
+
 <div class="row">
     <div class="col-lg-12">
         <div class="search-element">
@@ -32,8 +29,9 @@ Merchant User List
                   
                   <div class="card-body">
                   <form method="get">
-                    <button class="btn  btn-primary" type="submit" style="float:right"><i class="fas fa-search"></i> Search</button>
-                    <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250" style="width: 250px;float:right" name="filter" value="{{ filter }}">
+                      <button class="btn  btn-primary" type="submit" style="float:right;margin: 3px 10px;padding: 5px 15px;"><i class="fas fa-search"></i> Search</button>
+                      <input class="form-control" type="search" placeholder="Search" aria-label="Search" data-width="250" style="width: 250px;float:right" name="filter" value="{{ filter }}">
+
                    </form>
                   </div>
                   

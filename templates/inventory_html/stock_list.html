@@ -15,11 +15,13 @@
     padding:9px 15px!important;
     height:60px;
     vertical-align: middle;
+    border-bottom: 1px solid grey;
     }
-    .table:not(.table-sm):not(.table-md):not(.dataTable) td, .table:not(.table-sm):not(.table-md):not(.dataTable) th {
+.table:not(.table-sm):not(.table-md):not(.dataTable) td, .table:not(.table-sm):not(.table-md):not(.dataTable) th {
     padding: 9px 15px!important;
     height: 60px;
     vertical-align: middle;
+
 
     }
 label {
@@ -76,21 +78,37 @@ label {
     border-radius: 8px !important;
 }
 .paginate_button {
-        border-radius: 30px;
+    border-radius: 30px;
     font-size: 20px;
     color: black;
     font-family: cursive;
 }
 .btn-primary-color{
-    width: 30%!important;
+    width: 32%!important;
     box-shadow: 0 2px 6px #acb5f6!important;
-    background-color: #6777ef!important;
-    border-color: #6777ef!important;
+    background-color: #44e331!important;
+    border-color: #44e331!important;
     font-size: 18px!important;
-    color:white;
+    color: white;
     border-radius: 4px!important;
+    margin: 1rem 0rem 0.6rem 0rem!important;
+    float: right;
 
     }
+    .btn-primary-color:hover{
+    background-color:green!important;
+    color:white!important;
+    border:1px solid grey;
+    }
+    @media (max-width:768px){
+    .style-container{
+    overflow-x:scroll!important;
+    }
+    .btn-primary-color {
+    width: 100%!important;
+    }
+
+
 
 </style>
 
@@ -101,6 +119,8 @@ label {
 {% endif %}
 <div class="container style-container" align="center">
     <h3 class="list-product">List of Product Available in Stock</h3>
+    <a class="btn btn-primary-color btn-lg" href="/add_product">Add New Product</a>
+
     <table class="table" border="2px" id="table_id">
 
         <thead>
@@ -141,8 +161,8 @@ label {
         {% endfor %}
 
         </table>
-        <br>
-        <a class="btn btn-primary-color btn-lg" href="/add_product">Add New Product</a>
+
+
 
 </div>
 
