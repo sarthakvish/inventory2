@@ -7,11 +7,24 @@ from django.core.files.storage import FileSystemStorage
 from django.contrib.messages.views import messages
 from django.urls import reverse
 from django.http import HttpResponseRedirect,HttpResponse
-from django.db.models import Q
+from django.db.models import Q, Sum, F
+from inventory_app.models import Stock, StockHistory, MerchantUser
 
 @login_required(login_url="/admin/")
 def admin_home(request):
-    return render(request,"admin_templates/home.html")
+    stock_count=Stock.objects.all().count()
+    stock_reorder_count=Stock.objects.filter(quantity__lte=F('reorder_level')).count()
+    total_issue_quantity= StockHistory.objects.aggregate(Sum('issue_quantity'))['issue_quantity__sum']
+    total_receive_quantity = StockHistory.objects.aggregate(Sum('receive_quantity'))['receive_quantity__sum']
+    total_merchant_user= MerchantUser.objects.all().count()
+    context={
+        'stock_count':stock_count,
+        'issue_quantity': total_issue_quantity,
+        'receive_quantity': total_receive_quantity,
+        'total_merchant_user': total_merchant_user,
+        'stock_reorder_count': stock_reorder_count,
+    }
+    return render(request,"admin_templates/admin_home.html", context)
 
 # class CategoriesListView(ListView):
 #     model=Categories
