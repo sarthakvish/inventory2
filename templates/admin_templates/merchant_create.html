@@ -5,6 +5,31 @@ Merchant Create
 
 
 {% block custom_css %}
+<style>
+     .card-header {
+    border: 2px solid white!important;
+    background-color: black!important;
+    color: white!important;
+    }
+    .card {
+    box-shadow: 1px 1px 8px grey!important;
+    }
+    .form-group > label {
+     font-size: 16px!important;
+     }
+     .form-control:not(.form-control-sm):not(.form-control-lg) {
+     box-shadow: 2px 2px 3px grey!important;
+     }
+     .btn-color{
+         box-shadow: 0 2px 6px #7e808a!important;
+         background-color: #6f6f74!important;
+         border-color: #828388!important;
+    }
+     .section-header {
+     box-shadow: 0px 1px 4px grey!important;
+     }
+
+</style>
 {% endblock custom_css %}
 
 {% block page_title %}
@@ -35,7 +60,7 @@ Merchant Create
         {% endfor %}
          <div class="form-group">
             <label>Profile Image</label>
-            <input type="file" name="profile_pic" id="profile_pic" class="form-control">
+            <input type="file" name="profile_pic" id="profile_pic" class="form-control choose-image">
         </div>
 
       <div class="form-group">
@@ -59,7 +84,7 @@ Merchant Create
         </div>
 
 
-        <a href="/merchant_list"><button type="submit" class="btn btn-primary btn-block">SAVE MERCHANT USER</button></a>
+        <a href="/merchant_list"><button type="submit" class="btn btn-primary  btn-color btn-block">SAVE MERCHANT USER</button></a>
     </form>
 </div>
 </div>

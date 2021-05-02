@@ -18,6 +18,10 @@
   <!-- CSS Libraries -->
   <link rel="stylesheet" href="{% static '/modules/jqvmap/dist/jqvmap.min.css' %}">
   <link rel="stylesheet" href="{% static '/modules/weather-icon/css/weather-icons.min.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+
   <link rel="stylesheet" href="{% static '/modules/weather-icon/css/weather-icons-wind.min.css' %}">
   <link rel="stylesheet" href="{% static '/modules/summernote/summernote-bs4.css' %}">
 
@@ -50,6 +54,11 @@
   }
   .no-margin{
     margin:0px;
+  }
+  .main-footer {
+    color: white!important;
+    background-color: #00c6d7!important;
+    font-size: 16px!important;
   }
   </style>
 <!-- /END GA --></head>
@@ -85,7 +94,7 @@
         {% block page_content %}
         {% endblock page_content %}
       </div>
-      <footer class="main-footer">
+      <footer class="main-footer" style="">
         <div class="footer-left">
           Copyright &copy; 2021 <div class="bullet"></div> Kolonizer
         </div>

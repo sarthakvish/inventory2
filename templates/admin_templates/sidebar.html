@@ -1,15 +1,103 @@
+<style>
+    .main-sidebar .sidebar-menu li.menu-header {
+    padding: 3px 15px;
+    color: #191919;
+    font-size: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1.3px;
+    font-weight: 600;
+    text-align: center;
+    background-color:white;
+}
+.btn-primary-sidebar{
+
+    box-shadow: 2px 1px 5px white!important;
+    background-color: white;
+    border-color: #2f37740d!important;
+    border-radius: 5px;
+    color: black;
+    }
+    .btn{
+     border-radius: 5px!important;
+   }
+
+   .main-sidebar {
+    background-color: #052963!important;
+    }
+
+  .sidebar-brand {
+   background: white!important;
+   }
+.sidebar-menu li.active a {
+    color: white!important;
+    font-weight: 600;
+    font-size: 16px!important;
+
+    }
+    .sidebar-menu li.active a :hover{
+     background- color:white!important;
+
+    }
+    .sidebar-menu > li.active > a:before {
+    content: '';
+    background-color: #052963!important;
+    }
+    .sidebar-menu li.active ul.dropdown-menu li a {
+    padding-left: 61px;
+    background-color: #052963!important;
+    }
+    .sidebar-menu li.active ul.dropdown-menu li a :hover{
+     color:white!important;
+    }
+    ul.dropdown-menu {
+     background-color: #052963!important;
+}
+   .sidebar-menu li a {
+    color: white!important;
+    font-size: 16px;
+    }
+    .sidebar-menu li a:hover{
+    background-color:white!important;
+    color:grey!important;
+    }
+    .main-sidebar .sidebar-menu li a.has-dropdown:after{
+        content: " ";
+        display:none!important
+    }
+    .sidebar-menu > li.active > a {
+     background-color: #052963!important;
+     }
+    .sidebar-menu li a i {
+
+    margin-right: 20px;
+    font-size: 21px!important;
+    }
+     .main-sidebar .sidebar-menu > li > a {
+      background-color: #052963!important;
+      }
+      body.sidebar-mini .main-sidebar .sidebar-menu > li ul.dropdown-menu li a {
+
+      background-color: #052963!important;
+      color:white!important;
+    }
+
+</style>
+
+
 {% load static %}
+
+
 
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="/"><img src="{% static '/img/logo.png' %}" style="height: 85px;" /></a>
+        <a href="/"><img src="{% static '/img/mastercard.png' %}" style="height: 85px;" /></a>
       </div>
       <div class="sidebar-brand sidebar-brand-sm">
-        <a href="/"><img src="{% static '/img/logo.png' %}" style="height: 85px;" /></a>
+        <a href="/"><img src="{% static '/css/images/inventory.jpg' %}" /></a>
       </div>
       <ul class="sidebar-menu">
-        <li class="menu-header">Dashboard</li>
+        <li class="menu-header">KOLENTORY</li>
 {#        {% comment %} CATEGORY MENU {% endcomment %}#}
 {#        {% url 'category_list' as category_list %}#}
 {#        {% url 'category_create' as category_create %}#}
@@ -42,7 +130,7 @@
         {% url 'list_history' as list_history %}
 {#        {% url 'chart' id as chart %}#}
         <li class="dropdown {% if request.path == stock %} active {% endif %}{% if request.path == import %} active {% endif %}{% if request.path == export %} active {% endif %}{% if request.path == list_history %} active {% endif %}{% if request.path == chart %} active {% endif %}">
-          <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Stock Section</span></a>
+          <a href="#" class="nav-link has-dropdown"><i class="fa fa-stack-exchange" aria-hidden="true"></i><span>Stock Section</span></a>
           <ul class="dropdown-menu">
             <li class='{% if request.path == stock %} active {% endif %} {% if request.path == stock %} active {% endif %}' ><a class="nav-link" href="{% url 'stock' %}">Stock</a></li>
             <li class='{% if request.path == export %} active {% endif %} {% if request.path == export %} active {% endif %}' ><a class="nav-link" href="{% url 'export' %}">Export Data</a></li>
@@ -59,7 +147,7 @@
         {% url 'merchant_list' as merchant_list %}
         {% url 'merchant_update' id as merchant_update %}
         <li class="dropdown {% if request.path == merchant_create %} active {% endif %}{% if request.path == merchant_list %} active {% endif %} {% if request.path == merchant_update %} active {% endif %}">
-          <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Merchant User</span></a>
+          <a href="#" class="nav-link has-dropdown"><i class="fa fa-user-circle" aria-hidden="true"></i><span>Merchant User</span></a>
           <ul class="dropdown-menu">
             <li class='{% if request.path == merchant_create %} active {% endif %}'><a class="nav-link" href="{% url 'merchant_create' %}">Add Merchant User</a></li>
             <li class='{% if request.path == merchant_list %} active {% endif %} {% if request.path == merchant_update %} active {% endif %}' ><a class="nav-link" href="{% url 'merchant_list' %}">Merchant User List</a></li>
@@ -78,8 +166,8 @@
       </ul>
 
       <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
-        <a href="{% url 'admin_logout_process' %}" class="btn btn-primary btn-lg btn-block btn-icon-split">
-          <i class="fas fa-rocket"></i> LOGOUT
+        <a href="{% url 'admin_logout_process' %}" class="btn btn-primary-sidebar btn-lg btn-block btn-icon-split">
+         <i class="fa fa-sign-out" aria-hidden="true"></i> LOGOUT
         </a>
       </div>        </aside>
   </div>
