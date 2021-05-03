@@ -66,9 +66,6 @@ class StaffUser(models.Model):
 
 class MerchantUser(models.Model):
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    name=models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True, blank=True
-    ,related_name='names')
-    contact = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True,blank=True, related_name='contacts')
     profile_pic=models.FileField(default="")
     company_name=models.CharField(max_length=255)
     gst_details=models.CharField(max_length=255)
@@ -76,6 +73,9 @@ class MerchantUser(models.Model):
     is_added_by_admin=models.BooleanField(default=False)
     created_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
+
+    def __str__(self):
+        return self.auth_user_id.username +"-" + self.auth_user_id.phone
 
 
 class CustomerUser(models.Model):
