@@ -5,38 +5,38 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
 #
-class CustomUserManager(BaseUserManager):
-    """Define a model manager for User model with no username field."""
-
-    use_in_migrations = True
-
-    def _create_user(self, phone, password, **extra_fields):
-        """Create and save a User with the given phone and password."""
-        if not phone:
-            raise ValueError('The given phone must be set')
-        self.phone = phone
-        user = self.model(phone=phone, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_user(self, phone, password=None, **extra_fields):
-        """Create and save a regular User with the given phone and password."""
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        return self._create_user(phone, password, **extra_fields)
-
-    def create_superuser(self, phone, password, **extra_fields):
-        """Create and save a SuperUser with the given phone and password."""
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-
-        return self._create_user(phone, password, **extra_fields)
+# class CustomUserManager(BaseUserManager):
+#     """Define a model manager for User model with no username field."""
+#
+#     use_in_migrations = True
+#
+#     def _create_user(self, phone, password, **extra_fields):
+#         """Create and save a User with the given phone and password."""
+#         if not phone:
+#             raise ValueError('The given phone must be set')
+#         self.phone = phone
+#         user = self.model(phone=phone, **extra_fields)
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
+#
+#     def create_user(self, phone, password=None, **extra_fields):
+#         """Create and save a regular User with the given phone and password."""
+#         extra_fields.setdefault('is_staff', False)
+#         extra_fields.setdefault('is_superuser', False)
+#         return self._create_user(phone, password, **extra_fields)
+#
+#     def create_superuser(self, phone, password, **extra_fields):
+#         """Create and save a SuperUser with the given phone and password."""
+#         extra_fields.setdefault('is_staff', True)
+#         extra_fields.setdefault('is_superuser', True)
+#
+#         if extra_fields.get('is_staff') is not True:
+#             raise ValueError('Superuser must have is_staff=True.')
+#         if extra_fields.get('is_superuser') is not True:
+#             raise ValueError('Superuser must have is_superuser=True.')
+#
+#         return self._create_user(phone, password, **extra_fields)
 class CustomUser(AbstractUser):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,10}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 10 digits allowed.")
@@ -46,12 +46,12 @@ class CustomUser(AbstractUser):
     user_type_choices = ((1, "Admin"), (2, "Staff"), (3, "Merchant"), (4, "Customer"))
     user_type = models.CharField(max_length=255, choices=user_type_choices, default=1)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = []
-
-    objects = CustomUserManager()
+    # USERNAME_FIELD = 'username'
+    # REQUIRED_FIELDS = []
+    #
+    # objects = CustomUserManager()
     def __str__(self):
-        return self.username
+        return self.username +'-'+ self.phone
 
 # models for different type of users (Admin, merchant, staff, customer)
 class AdminUser(models.Model):
@@ -66,6 +66,9 @@ class StaffUser(models.Model):
 
 class MerchantUser(models.Model):
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    name=models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True, blank=True
+    ,related_name='names')
+    contact = models.ForeignKey(CustomUser, on_delete=models.CASCADE,null=True,blank=True, related_name='contacts')
     profile_pic=models.FileField(default="")
     company_name=models.CharField(max_length=255)
     gst_details=models.CharField(max_length=255)
@@ -92,6 +95,8 @@ class Stock(models.Model):
     # user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
     category = models.CharField(max_length=50, blank=True, null=True)
     item_name = models.CharField(max_length=50, blank=True, null=True)
+    provider_merchant_name=models.CharField(max_length=50, blank=True, null=True)
+    provider_merchant_contact=models.CharField(max_length=255,blank=True,null=True)
     quantity = models.IntegerField(default='0', blank=True, null=True)
     receive_quantity = models.IntegerField(default='0', blank=True, null=True)
     measurement_unit = models.CharField(choices=choices, max_length=255, default='Choose measurement unit')

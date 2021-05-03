@@ -1,11 +1,11 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 
-from .models import Stock, Invoice
+from .models import Stock, Invoice, MerchantUser,CustomUser
 
 
 class StockCreateForm(forms.ModelForm):
-    export_to_CSV = forms.BooleanField(required=False)
     class Meta:
         model = Stock
         fields = ['category', 'item_name','quantity','measurement_unit','reorder_level']
