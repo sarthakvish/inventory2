@@ -7,6 +7,17 @@
 <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
 </head>
 <style>
+.form-data h3 {
+    font-size: 22px;
+    color: #052963;
+}
+
+.my-3 {
+    box-shadow: 0px 0px 7px darkslategrey!important;
+}
+
+</style>
+<style>
 label {
     color: white !important;
     background: black !important;
@@ -29,12 +40,28 @@ label {
 .form-data{
 padding:0rem;
 }
+.btn-primary {
+    box-shadow: 0 2px 6px #00c6d7!important;
+    background-color: #00c6d7!important;
+    border-color: #00c6d7!important;
+    }
+    .btn-primary:hover{
+    background-color:#052963!important;
+    border-color: #052963!important;
+    box-shadow: 0 2px 6px #052963!important;
+
+    }
+    .btn{
+    font-size:15px!important;
+    }
+
   @media (max-width:768px){
    .row {
       margin: 0rem 0rem!important;
       padding: 1rem 0rem!important;
       }
      }
+
 
 </style>
 
@@ -43,7 +70,7 @@ padding:0rem;
 <form method="post" enctype="multipart/form-data" class="form-data">
     {% csrf_token %}
     <h3>Export Data</h3>
-    <p>exporting from database</p>
+<!--    <p>exporting from database</p>-->
     <p>Please select format of file.</p>
     <select name="file-format" class="form-control my-3">
         <option selected>Choose format...</option>
