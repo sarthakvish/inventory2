@@ -7,7 +7,7 @@ from .models import Stock, Invoice, CustomUser
 
 
 class StockCreateAdmin(ImportExportModelAdmin):
-   list_display = ['category', 'item_name', 'quantity']
+   list_display = ['category', 'item_name', 'quantity', 'provider_merchant_name']
    form = StockCreateForm
    list_filter = ['category']
    search_fields = ['category', 'item_name']
