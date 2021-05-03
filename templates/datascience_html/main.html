@@ -1,13 +1,120 @@
 {% extends 'admin_templates/base_template.html' %}
+{% block custom_css %}
+<style>
+    .block-center {
+    text-align: center!important;
+    display:flex!important;
+
+    }
+    .block-center img{
+    width:1500px!important;
+    height: 300px!important;
+    }
+    .block-center-button {
+      display: flex;
+         justify-content: center;
+    margin: 1rem 0rem;
+    }
+    .form-container{
+    width: 100%;
+    text-align: center;
+    margin: 1rem 0rem;
+    background-color: #ffffff;
+    padding: 1rem 1rem;
+    box-shadow: 2px 0px 7px #656970;
+    }
+    .select-button {
+    width: 100%!important;
+    border-radius: 5px!important;
+    background-color:#636667!important;
+    padding: .6rem;
+    color: white;
+    font-size: 16px;
+    border:none;
+    transition:all ease 1s;
+    }
+
+
+    .ui.button {
+    width: 200px!important;
+    border-radius: 5px!important;
+    }
+    .block-center-button {
+    display: flex;
+    justify-content: center;
+    margin: 1rem 0rem;
+    padding: 1rem 1rem;
+    box-shadow: 2px 2px 6px dimgrey;
+    }
+
+    .ui.form .field>.selection.dropdown {
+     box-shadow: 1px 1px 3px darkslategrey;
+    }
+    input[type="text"]{
+     box-shadow: 1px 1px 3px darkslategrey!important;
+    }
+    .summary-button {
+    padding: .7rem;
+    margin: .5rem;
+    border: 1px solid grey;
+    background-color: white;
+    box-shadow: 0px 0px 6px grey;
+    color: #333030;
+    font-family: inherit;
+    font-size:16px;
+    }
+     .summary-button:hover{
+     background-color: grey;
+     color: white;
+     }
+
+    .add-records-button{
+      padding: .7rem!important;
+      margin: .5rem!important;
+      border: 1px solid grey!important;
+      background-color: white!important;
+      box-shadow: 0px 0px 6px grey!important;
+      color: #333030;
+      font-family: inherit;
+      font-size:16px;
+    }
+    .add-records-button:hover{
+     background-color:grey!important;
+     color: white;
+     }
+    button:focus{
+    outline:none!important;
+    }
+    @media (max-width:768px){
+    .block-center{
+    flex-direction:column;
+    }
+    .block-center img{
+     width:600px!important!;
+    }
+    }
+
+
+
+
+
+
+
+
+
+</style>
+
+{% endblock custom_css %}
 {% load static %}
 {% block title %}performance{% endblock %}
 
 {% block page_content %}
 
 {#    {{ products|safe }}#}
-<div class="ui modal mymodal">
+
+    <div class="ui modal mymodal">
     <div class="header"><h1>Price Data</h1></div>
-  <div class="ui container">
+    <div class="ui container">
     <ul>
         <li><strong>Count:</strong>{{ price.count }}</li>
         <li><strong>Mean:</strong>{{ price.mean }}</li>
@@ -19,7 +126,7 @@
   </div>
 </div>
 <div>
-    <div class="block-center">
+
         {% if error_message %}
             <div class="ui negative message">
                 <i class="close icon"></i>
@@ -28,14 +135,16 @@
                 </div>
             </div>
         {% endif %}
-
+<div class="block-center graph-form">
         {% if request.POST %}
             {% if graph %}
                 <img src="data:image/png;base64,{{ graph|safe }}">
             {% endif %}
         {% endif %}
-</div>
-<div class="form-container" style="width:100%;text-align:center;margin:4rem 7rem;">
+
+
+
+<div class="form-container">
 
     <form action="" method="POST" class="ui form">
     {% csrf_token %}
@@ -65,19 +174,21 @@
                 </div>
             </div>
         </div>
-
-        <div class="block-center">
-            <button class="ui primary button">Select</button>
+        <div class="block-center-select">
+            <button class="select-button">Select</button>
         </div>
+        </form>
+         <div class="block-center-button">
+        <button class=" summary-button" id="modal-btn">See Summary</button>
+        <a href={% url "datascience:add_purchase" %}><button class="add-records-button">Add Records</button></a>
+       </div>
+     </div>
 
-    </form>
-</div>
-    <div class="block-center">
-        <button class="ui secondary button" id="modal-btn">See summary</button>
-        <br>
-        <a href={% url "datascience:add_purchase" %}><button class="ui positive button">Add Records</button></a>
+
     </div>
-</div>
+    </div>
+    </div>
+
 <script>
 $('.ui.dropdown').dropdown();
 $(".close.icon").click(function(){

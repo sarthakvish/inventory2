@@ -101,11 +101,13 @@ label {
     border:1px solid grey;
     }
     @media (max-width:768px){
-    .style-container{
-    overflow-x:scroll!important;
+   .table-scroll {
+    width: 100%!important;
+    overflow-x: scroll!important;
     }
     .btn-primary-color {
     width: 100%!important;
+    }
     }
 
 
@@ -120,7 +122,7 @@ label {
 <div class="container style-container" align="center">
     <h3 class="list-product">List of Product Available in Stock</h3>
     <a class="btn btn-primary-color btn-lg" href="/add_product">Add New Product</a>
-
+<div class="table-scroll">
     <table class="table" border="2px" id="table_id">
 
         <thead>
@@ -161,6 +163,7 @@ label {
         {% endfor %}
 
         </table>
+</div>
 
 
 
