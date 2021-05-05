@@ -1,5 +1,6 @@
+from django.contrib.auth.decorators import login_required
 from django.urls import path
-from . import views, AdminViews
+from . import views, AdminViews, CustomerViews, MerchantViews, StaffViews, UsersLoginViews
 
 urlpatterns = [
     path('stock/', views.stock_page_view, name='stock'),
@@ -20,9 +21,9 @@ urlpatterns = [
 
     # url for Adminviews.py file for merchant Merchant User
 
-    path('merchant_create',AdminViews.MerchantUserCreateView.as_view(),name="merchant_create"),
-    path('merchant_list',AdminViews.MerchantUserListView.as_view(),name="merchant_list"),
-    path('merchant_update/<slug:pk>',AdminViews.MerchantUserUpdateView.as_view(),name="merchant_update"),
+    path('merchant_create',login_required(AdminViews.MerchantUserCreateView.as_view()),name="merchant_create"),
+    path('merchant_list',login_required(AdminViews.MerchantUserListView.as_view()),name="merchant_list"),
+    path('merchant_update/<slug:pk>',login_required(AdminViews.MerchantUserUpdateView.as_view()),name="merchant_update"),
 
 
     # genral admin
@@ -34,5 +35,18 @@ urlpatterns = [
     path('admin_logout_process', views.adminLogoutProcess, name="admin_logout_process"),
 
     # PAGE FOR ADMIN
-    path('admin_home', AdminViews.admin_home, name="admin_home")
+    path('userloginviews', UsersLoginViews.ShowLoginPage, name="show_login"),
+    path('doLogin', UsersLoginViews.doLogin, name="do_login"),
+    # PAGE FOR ADMIN
+    path('admin_home', AdminViews.admin_home, name="admin_home"),
+
+     # Staff URL Path
+    path('staff_home', StaffViews.staff_home, name="staff_home"),
+
+    # merchant Login URL Path
+    path('merchant_home', MerchantViews.merchant_home, name="merchant_home"),
+
+    # customer Login URL Path
+    path('customer_home', CustomerViews.customer_home, name="customer_home"),
+
 ]

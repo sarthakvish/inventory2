@@ -15,12 +15,12 @@ import csv
 from inventory_app.resources import StockResource
 
 
-@login_required
+@login_required(login_url="/userloginviews")
 def stock_page_view(request):
     stocks = Stock.objects.all()
     return render(request, 'inventory_html/stock_list.html', {'stock': stocks})
 
-@login_required
+@login_required(login_url="/userloginviews")
 def add_product_page_view(request):
     form = StockCreateForm()
     if request.method == 'POST':
@@ -33,7 +33,7 @@ def add_product_page_view(request):
 
     return render(request, 'inventory_html/product_add.html', {'form': form})
 
-@login_required
+@login_required(login_url="/userloginviews")
 def update_product_view(request, id):
     product = Stock.objects.get(id=id)
     form = StockCreateForm(instance=product)
@@ -48,13 +48,13 @@ def update_product_view(request, id):
     context = {'form': form}
     return render(request, 'inventory_html/product_update.html', context)
 
-@login_required
+@login_required(login_url="/userloginviews")
 def delete_product_view(request, id):
     product = Stock.objects.get(id=id)
     product.delete()
     return redirect('/stock')
 
-@login_required
+@login_required(login_url="/userloginviews")
 def issue_items(request, id):
     product = Stock.objects.get(id=id)
     form = IssueForm(request.POST or None, instance=product)
@@ -78,7 +78,7 @@ def issue_items(request, id):
     }
     return render(request, "inventory_html/issue_items.html", context)
 
-@login_required
+@login_required(login_url="/userloginviews")
 def receive_items(request, id):
     product = Stock.objects.get(id=id)
     form = ReceiveForm(request.POST or None, instance=product)
@@ -100,7 +100,7 @@ def receive_items(request, id):
     }
     return render(request, "inventory_html/recieve_items.html", context)
 
-@login_required
+@login_required(login_url="/userloginviews")
 def reorder_level(request, id):
     product = Stock.objects.get(id=id)
     form = ReorderLevelForm(request.POST or None, instance=product)
@@ -116,7 +116,7 @@ def reorder_level(request, id):
         }
     return render(request, "inventory_html/reorder_items.html", context)
 
-@login_required
+@login_required(login_url="/userloginviews")
 def list_history(request):
     header = 'LIST OF ITEMS'
     queryset = StockHistory.objects.all()
@@ -126,12 +126,13 @@ def list_history(request):
     }
     return render(request, "inventory_html/list_history.html",context)
 
-@login_required
+@login_required(login_url="/userloginviews")
 def delete_history(request):
     stock_history = StockHistory.objects.all()
     stock_history.delete()
     return redirect('/list_history')
 
+@login_required(login_url="/userloginviews")
 def import_data(request):
     global result
     if request.method == 'POST':
@@ -159,6 +160,7 @@ def import_data(request):
 
     return render(request, 'inventory_html/import.html')
 
+@login_required(login_url="/userloginviews")
 def export_data(request):
     if request.method == 'POST':
         # Get selected option from form
@@ -231,4 +233,4 @@ def adminLoginProcess(request):
 def adminLogoutProcess(request):
     logout(request)
     messages.success(request,"Logout Successfully!")
-    return HttpResponseRedirect(reverse("admin_login"))
+    return HttpResponseRedirect(reverse("show_login"))

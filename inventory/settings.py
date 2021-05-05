@@ -40,8 +40,9 @@ INSTALLED_APPS = [
 SITE_ID = 1
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
-    'allauth.account.auth_backends.AuthenticationBackend',
-    'django.contrib.auth.backends.ModelBackend',
+    # 'allauth.account.auth_backends.AuthenticationBackend',
+    # 'inventory_app.EmailBackEnd.EmailBackend',
+
     
 ]
 ACCOUNT_EMAIL_VERIFICATION = "none"
@@ -141,8 +142,8 @@ MEDIA_URL='/media/'
 MEDIA_ROOT=os.path.join(BASE_DIR,"media")
 # MEDIA_ROOT=os.path.join(os.path.dirname(BASE_DIR),"static_cdn","media_root")
 LOGIN_URL='/stock/'
-LOGIN_REDIRECT_URL = '/stock/'
-ACCOUNT_LOGOUT_REDIRECT_URL = '/accounts/login/'
+LOGIN_REDIRECT_URL = '/userloginviews/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/userloginviews/'
 ACCOUNT_SIGNUP_REDIRECT_URL = '/stock'
 AUTH_USER_MODEL = 'inventory_app.CustomUser'
 # ACCOUNT_USER_MODEL_USERNAME_FIELD = None

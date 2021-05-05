@@ -48,7 +48,7 @@ class CustomUser(AbstractUser):
     user_type = models.CharField(max_length=255, choices=user_type_choices, default=1)
 
     # USERNAME_FIELD = 'username'
-    # REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['phone']
     #
     # objects = CustomUserManager()
     def __str__(self):
