@@ -1,6 +1,9 @@
 {% extends "admin_templates/base_template.html" %}
 
 {% load static %}
+{% block page_title %}
+    <h2 style="color:#44e331;">Your Stock History</h2>
+{% endblock page_title %}
 {% block page_content %}
 
 {#<head>#}
@@ -59,7 +62,6 @@
 <p class="text-warning">Welcome, new user. Please log in.</p>
 {% endif %}
 <div class="container" align="center">
-    <h3 class="text-warning">Your Stock History</h3>
     <a class="btn btn-danger btn-lg" href="/delete_history">Clear All History</a>
    <div class="display_table">
         <table class='table'>
