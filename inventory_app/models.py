@@ -4,6 +4,7 @@ from django.contrib.auth.models import User, AbstractUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
+
 #
 # class CustomUserManager(BaseUserManager):
 #     """Define a model manager for User model with no username field."""

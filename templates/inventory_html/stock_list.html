@@ -1,6 +1,9 @@
 {% extends "admin_templates/base_template.html" %}
 
 {% load static %}
+{% block page_title %}
+    <h3 class="list-product">List of Product Available in Stock</h3>
+{% endblock page_title %}
 {% block page_content %}
 
 <head>
@@ -26,11 +29,11 @@
     }
 label {
     color: white !important;
-    background: black !important;
+    background: #44e331 !important;
 }
 .dataTables_info{
     color: white !important;
-    background: black !important;
+    background: #44e331 !important;
 
 }
 .text-warning{
@@ -38,7 +41,7 @@ label {
         text-align: center;
 }
 .list-product{
-           color: red;
+           color:#44e331;
          text-align: center;
          margin: 1rem 0rem;
          font-size: 22px;
@@ -80,7 +83,7 @@ label {
 .paginate_button {
     border-radius: 30px;
     font-size: 20px;
-    color: black;
+    color: green;
     font-family: cursive;
 }
 .btn-primary-color{
@@ -114,13 +117,13 @@ label {
 
 </style>
 
-{% if user.is_authenticated %}
-<h2 class="text-warning">Welcome, {{ user.get_username }}. Thanks for logging in.</h2>
-{% else %}
-<p class="text-warning">Welcome, new user. Please log in.</p>
-{% endif %}
+{#{% if user.is_authenticated %}#}
+{#<h2 class="text-warning">Welcome, {{ user.get_username }}. Thanks for logging in.</h2>#}
+{#{% else %}#}
+{#<p class="text-warning">Welcome, new user. Please log in.</p>#}
+{#{% endif %}#}
 <div class="container style-container" align="center">
-    <h3 class="list-product">List of Product Available in Stock</h3>
+
     <a class="btn btn-primary-color btn-lg" href="/add_product">Add New Product</a>
 <div class="table-scroll">
     <table class="table" border="2px" id="table_id">
@@ -143,14 +146,14 @@ label {
 {#             <td><img width="70px" height="70px" src="{{ product.product_image.url }}" /></td>#}
              <td>{{ product.item_name }}</td>
              <td>{{ product.category }}</td>
-             <td>
-                 {% if product.quantity <= product.reorder_level %}
-                 <div style="background-color: orangered;">
-                     <a  style="color: black;" href="/receive_items/{{product.id}}">{{ product.quantity }}</a>
-                 </div>
-                 {% else %}{{ product.quantity }}
-                 {% endif %}
-             </td>
+             {% if product.quantity <= product.reorder_level %}
+                 <td style="background-color: orangered;">
+                     <a style="color: black;" href="/receive_items/{{ product.id }}">{{ product.quantity }}</a>
+                 </td>
+             {% else %}
+                 <td>{{ product.quantity }}</td>
+             {% endif %}
+
              <td>{{ product.measurement_unit }}</td>
              <td><a href="/reorder_level/{{product.id}}">{{product.reorder_level}}</a></td>
              <td>{{ product.timestamp}}</td>
@@ -168,7 +171,6 @@ label {
 
 
 </div>
-
 
 
 {% endblock %}
