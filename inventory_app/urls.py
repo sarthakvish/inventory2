@@ -40,7 +40,7 @@ urlpatterns = [
     # PAGE FOR ADMIN
     path('admin_home', AdminViews.admin_home, name="admin_home"),
 
-     # Staff URL Path
+     # Staff Login URL Path
     path('staff_home', StaffViews.staff_home, name="staff_home"),
 
     # merchant Login URL Path
@@ -49,4 +49,14 @@ urlpatterns = [
     # customer Login URL Path
     path('customer_home', CustomerViews.customer_home, name="customer_home"),
 
+
+    # Multiusers Sign Up URL Path---
+
+    path('signup_admin', UsersLoginViews.signup_admin, name="signup_admin"),
+    path('signup_customer', UsersLoginViews.signup_student, name="signup_customer"),
+    path('signup_staff', UsersLoginViews.signup_staff, name="signup_staff"),
+    path('signup_merchant', UsersLoginViews.signup_merchant, name="signup_merchant"),
+
+    path('do_admin_signup', UsersLoginViews.do_admin_signup, name="do_admin_signup"),
+    path('do_merchant_signup', UsersLoginViews.do_merchant_signup, name="do_merchant_signup"),
 ]
