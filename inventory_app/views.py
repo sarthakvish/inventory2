@@ -18,6 +18,9 @@ from inventory_app.resources import StockResource
 @login_required(login_url="/userloginviews")
 def stock_page_view(request):
     stocks = Stock.objects.all()
+    # below statement is to fetch data from database and passing it in the form of list for use of twilio
+    # stockitem=list(Stock.objects.all().values_list('item_name', flat=True))
+    # print(stockitem)
     return render(request, 'inventory_html/stock_list.html', {'stock': stocks})
 
 @login_required(login_url="/userloginviews")

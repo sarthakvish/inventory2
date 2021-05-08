@@ -10,6 +10,7 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.db.models import Q, Sum, F
 from inventory_app.models import Stock, StockHistory, MerchantUser
 
+
 @login_required(login_url="/userloginviews")
 def admin_home(request):
     stock_count=Stock.objects.all().count()
