@@ -103,8 +103,140 @@ label {
     color:white!important;
     border:1px solid grey;
     }
-    @media (max-width:768px){
+    label {
+    color: white !important;
+    background: #052963 !important;
+    }
+    #table_id_filter {
+     font-family: math!important;
+     }
+     #table_id_length {
+     font-family: math!important;
+    }
+    #table_id_length > label {
+    padding: .6rem 2rem!important;
+    border-radius: 5px !important;
+    font-size: 18px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    }
+     select {
+    text-transform: none;
+    border: none;
+    border-radius: 2px;
+    padding: 1px 2px;
+    }
+    #table_id_filter > label {
+    padding: .6rem 2rem!important;
+    border-radius: 5px !important;
+    font-size: 18px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    margin: 0rem 8rem;
+    }
+    input[type="search"] {
+    border: 1px solid white;
+    border-radius: 2px;
+    position: relative;
+    left: 0.3rem;
+    }
+    #table_id_info {
+    font-family: math;
+    width: 100%;
+    border-radius:0px!important;
+    }
+   .dataTables_info {
+    color: white !important;
+    background: #404240 !important;
+    padding: .6rem;
+    }
+    #table_id_paginate {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0rem;
+    }
+   .paginate_button {
+    font-size: 20px;
+    color: #404240;
+    font-family: math;
+    font-weight: 900;
+    border-radius: 1px!important;
+    padding: .5rem!important;
+    }
+   .paginate_button:hover{
+    border: 2px solid #404240;
+    border-radius: 1px!important;
+    padding: .5rem!important;
+    color:#404240;
+    }
+
+    .odd {
+    border-bottom: 2px solid #000000a6;
+    }
+    .dataTables_empty {
+    color: red;
+    }
+    input:focus{
+    outline:none;
+    }
+
+    @media (min-width:300px) and (max-width:1300px){
    .table-scroll {
+    width: 100%!important;
+    overflow-x: scroll!important;
+    }
+    .btn-primary-color {
+    width: 100%!important;
+    }
+    #table_id_length > label {
+    padding: .6rem 4rem!important;
+    border-radius: 5px !important;
+    font-size: 18px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    width:100%
+    }
+    #table_id_filter > label {
+    padding: .7rem 2rem!important;
+    border-radius: 5px !important;
+    font-size: 13px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    margin: 0rem 0rem;
+    margin-top: 52px;
+    margin-bottom: 20px;
+    width:100%
+    }
+    }
+    @media (width:280px){
+      #table_id_length > label {
+    padding: .6rem 2rem!important;
+    border-radius: 5px !important;
+    font-size: 18px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    width:100%
+    }
+    #table_id_filter > label {
+    padding: .7rem .6rem!important;
+    border-radius: 5px !important;
+    font-size: 13px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    margin: 0rem 0rem;
+    margin-top: 52px;
+    margin-bottom: 20px;
+    width:100%
+    }
+
+
+    .table-scroll {
     width: 100%!important;
     overflow-x: scroll!important;
     }
@@ -122,10 +254,12 @@ label {
 {#{% else %}#}
 {#<p class="text-warning">Welcome, new user. Please log in.</p>#}
 {#{% endif %}#}
+
 <div class="container style-container" align="center">
 
+
     <a class="btn btn-primary-color btn-lg" href="/add_product">Add New Product</a>
-<div class="table-scroll">
+<div class="table-scroll ">
     <table class="table" border="2px" id="table_id">
 
         <thead>
@@ -146,9 +280,9 @@ label {
 {#             <td><img width="70px" height="70px" src="{{ product.product_image.url }}" /></td>#}
              <td>{{ product.item_name }}</td>
              <td>{{ product.category }}</td>
-             {% if product.quantity <= product.reorder_level %}
-                 <td style="background-color: orangered;">
-                     <a style="color: black;" href="/receive_items/{{ product.id }}">{{ product.quantity }}</a>
+           {% if product.quantity <= product.reorder_level %}
+             <td style="background-color: o">
+                 a style="color: black;" href="/receive_items/{{ product.id }}">{{ product.quantity }}</a>
                  </td>
              {% else %}
                  <td>{{ product.quantity }}</td>
@@ -171,6 +305,7 @@ label {
 
 
 </div>
+
 
 
 {% endblock %}
