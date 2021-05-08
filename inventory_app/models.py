@@ -1,10 +1,15 @@
+import os
+
 from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
-
+from twilio.rest import Client
+from decouple import config
+from dotenv import load_dotenv
+load_dotenv()
 #
 # class CustomUserManager(BaseUserManager):
 #     """Define a model manager for User model with no username field."""
@@ -48,7 +53,7 @@ class CustomUser(AbstractUser):
     user_type = models.CharField(max_length=255, choices=user_type_choices, default=1)
 
     # USERNAME_FIELD = 'username'
-    # REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ['phone']
     #
     # objects = CustomUserManager()
     def __str__(self):
@@ -78,11 +83,13 @@ class MerchantUser(models.Model):
     def __str__(self):
         return self.auth_user_id.username +"-" + self.auth_user_id.phone
 
-
 class CustomerUser(models.Model):
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     profile_pic=models.FileField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
+
+
+
 # models for Normal app.
 class Stock(models.Model):
     unit = 'un'
@@ -114,6 +121,29 @@ class Stock(models.Model):
 
     def __str__(self):
         return self.item_name +' '+ str(self.quantity) +' '+ self.measurement_unit
+
+  #code for sms alert for this model- Stock inside save method- Twilio api
+
+    def save(self, *args, **kwargs):
+        if self.quantity < self.reorder_level:
+            account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
+            auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
+            client = Client(account_sid, auth_token)
+            to_list=['+919039724783', '+91 9131776595']
+            for num in to_list:
+                message = client.messages \
+                    .create(
+                    body=f'STOCK ALERT- Product {self.item_name} is about to finish from stock',
+                    from_='+12084490932',
+                    to=num
+                )
+
+                print(message.sid)
+
+
+
+        return super().save(*args, **kwargs)
+
 
 class StockHistory(models.Model):
     category = models.CharField(max_length=50, blank=True, null=True)

@@ -10,7 +10,8 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.db.models import Q, Sum, F
 from inventory_app.models import Stock, StockHistory, MerchantUser
 
-@login_required(login_url="/admin/")
+
+@login_required(login_url="/userloginviews")
 def admin_home(request):
     stock_count=Stock.objects.all().count()
     stock_reorder_count=Stock.objects.filter(quantity__lte=F('reorder_level')).count()
@@ -97,6 +98,7 @@ def admin_home(request):
 #     fields="__all__"
 #     template_name="admin_templates/sub_category_update.html"
 
+# @login_required(login_url="/userloginviews")
 class MerchantUserListView(ListView):
     model=MerchantUser
     template_name="admin_templates/merchant_list.html"
@@ -119,6 +121,7 @@ class MerchantUserListView(ListView):
         context["all_table_fields"]=MerchantUser._meta.get_fields()
         return context
 
+# @login_required(login_url="/userloginviews")
 class MerchantUserCreateView(SuccessMessageMixin,CreateView):
     template_name="admin_templates/merchant_create.html"
     model=CustomUser
@@ -153,6 +156,7 @@ class MerchantUserCreateView(SuccessMessageMixin,CreateView):
         messages.success(self.request,"Merchant User Created")
         return HttpResponseRedirect(reverse("merchant_list"))
 
+# @login_required(login_url="/userloginviews")
 class MerchantUserUpdateView(SuccessMessageMixin,UpdateView):
     template_name="admin_templates/merchant_update.html"
     model=CustomUser
