@@ -277,12 +277,12 @@ label {
         </thead>
         {% for product in stock %}
          <tr>
-{#             <td><img width="70px" height="70px" src="{{ product.product_image.url }}" /></td>#}
+{#           <td><img width="70px" height="70px" src="{{ product.product_image.url }}" /></td>#}
              <td>{{ product.item_name }}</td>
              <td>{{ product.category }}</td>
            {% if product.quantity <= product.reorder_level %}
-             <td style="background-color: o">
-                 a style="color: black;" href="/receive_items/{{ product.id }}">{{ product.quantity }}</a>
+             <td style="background-color: red;">
+                 <a style="color: black;" href="/receive_items/{{ product.id }}">{{ product.quantity }}</a>
                  </td>
              {% else %}
                  <td>{{ product.quantity }}</td>
