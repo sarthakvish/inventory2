@@ -63,11 +63,13 @@ class CustomUser(AbstractUser):
 class AdminUser(models.Model):
     profile_pic=models.FileField(default="")
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
 
 class StaffUser(models.Model):
     profile_pic=models.FileField(default="")
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
 
 class MerchantUser(models.Model):
@@ -77,15 +79,21 @@ class MerchantUser(models.Model):
     gst_details=models.CharField(max_length=255)
     address=models.TextField()
     is_added_by_admin=models.BooleanField(default=False)
+    fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
 
     def __str__(self):
-        return self.auth_user_id.username +"-" + self.auth_user_id.phone
+        if self.is_added_by_admin==True:
+            return self.auth_user_id.username + "-" + self.auth_user_id.phone + " " + "(private merchant)"
+        else:
+            return self.auth_user_id.username + "-" + self.auth_user_id.phone
+
 
 class CustomerUser(models.Model):
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     profile_pic=models.FileField(default="")
+    fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
 
 
@@ -100,7 +108,7 @@ class Stock(models.Model):
         (kilogram, 'kg'),
         (bori, 'bori'),
     ]
-    # user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    auth_user_id=models.CharField(max_length=5,blank=True, null=True)
     category = models.CharField(max_length=50, blank=True, null=True)
     item_name = models.CharField(max_length=50, blank=True, null=True)
     provider_merchant_name=models.CharField(max_length=50, blank=True, null=True)
@@ -146,6 +154,7 @@ class Stock(models.Model):
 
 
 class StockHistory(models.Model):
+    auth_user_id = models.CharField(max_length=5, blank=True, null=True)
     category = models.CharField(max_length=50, blank=True, null=True)
     item_name = models.CharField(max_length=50, blank=True, null=True)
     quantity = models.IntegerField(default='0', blank=True, null=True)

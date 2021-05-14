@@ -10,7 +10,8 @@ class StockCreateForm(forms.ModelForm):
     provider_merchant_name=forms.ModelChoiceField(queryset=MerchantUser.objects.all())
     class Meta:
         model = Stock
-        fields = ['category', 'item_name','quantity','measurement_unit','reorder_level','provider_merchant_name']
+        fields = ['category', 'item_name','quantity','measurement_unit','reorder_level','provider_merchant_name', 'auth_user_id']
+        widgets= {'auth_user_id': forms.HiddenInput()}
 
 class IssueForm(forms.ModelForm):
     class Meta:

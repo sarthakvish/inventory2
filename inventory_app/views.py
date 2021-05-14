@@ -17,7 +17,8 @@ from inventory_app.resources import StockResource
 
 @login_required(login_url="/userloginviews")
 def stock_page_view(request):
-    stocks = Stock.objects.all()
+    auth_user_id=request.user.id
+    stocks = Stock.objects.filter(auth_user_id=auth_user_id)
     # below statement is to fetch data from database and passing it in the form of list for use of twilio
     # stockitem=list(Stock.objects.all().values_list('item_name', flat=True))
     # print(stockitem)
@@ -45,6 +46,8 @@ def update_product_view(request, id):
         form = StockCreateForm(request.POST, request.FILES, instance=product)
         # image_form = product_image_Form(request.POST,request.FILES,instance=product)
         if form.is_valid():
+            auth_user_id=request.POST.get('auth_user_id')
+            form.auth_user_id=auth_user_id
             form.save()
             # image_form.save()
             return redirect('/stock')
@@ -122,7 +125,8 @@ def reorder_level(request, id):
 @login_required(login_url="/userloginviews")
 def list_history(request):
     header = 'LIST OF ITEMS'
-    queryset = StockHistory.objects.all()
+    auth_user_id=request.user.id
+    queryset = StockHistory.objects.filter(auth_user_id=auth_user_id)
     context = {
         "header": header,
         "queryset": queryset,
@@ -131,7 +135,8 @@ def list_history(request):
 
 @login_required(login_url="/userloginviews")
 def delete_history(request):
-    stock_history = StockHistory.objects.all()
+    auth_user_id=request.user.id
+    stock_history = StockHistory.objects.filter(auth_user_id=auth_user_id)
     stock_history.delete()
     return redirect('/list_history')
 
@@ -165,11 +170,12 @@ def import_data(request):
 
 @login_required(login_url="/userloginviews")
 def export_data(request):
+    auth_user_id=request.user.id
     if request.method == 'POST':
         # Get selected option from form
         file_format = request.POST['file-format']
         employee_resource = StockResource()
-        dataset = employee_resource.export()
+        dataset = employee_resource.export(auth_user_id=auth_user_id)
         if file_format == 'CSV':
             response = HttpResponse(dataset.csv, content_type='text/csv')
             response['Content-Disposition'] = 'attachment; filename="exported_data.csv"'
@@ -237,3 +243,33 @@ def adminLogoutProcess(request):
     logout(request)
     messages.success(request,"Logout Successfully!")
     return HttpResponseRedirect(reverse("show_login"))
+
+
+# firebase code
+
+def showFirebaseJS(request):
+    data='importScripts("https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js");' \
+         'importScripts("https://www.gstatic.com/firebasejs/7.14.6/firebase-messaging.js"); ' \
+         'var firebaseConfig = {' \
+         '        apiKey: "AIzaSyBu0d0iW41tmu6rR9JJG-ODlwJgz5nmOPM",' \
+         '        authDomain: "kolentry-2569b.firebaseapp.com",' \
+         '        databaseURL: "https://kolentry-2569b-default-rtdb.firebaseio.com",' \
+         '        projectId: "kolentry-2569b",' \
+         '        storageBucket: "kolentry-2569b.appspot.com",' \
+         '        messagingSenderId: "858489842790",' \
+         '        appId: "1:858489842790:web:ae99848a638ad5850651a7",' \
+         '        measurementId: "G-MH7VTBJKJK"' \
+         ' };' \
+         'firebase.initializeApp(firebaseConfig);' \
+         'const messaging=firebase.messaging();' \
+         'messaging.setBackgroundMessageHandler(function (payload) {' \
+         '    console.log(payload);' \
+         '    const notification=JSON.parse(payload);' \
+         '    const notificationOption={' \
+         '        body:notification.body,' \
+         '        icon:notification.icon' \
+         '    };' \
+         '    return self.registration.showNotification(payload.notification.title,notificationOption);' \
+         '});'
+
+    return HttpResponse(data,content_type="text/javascript")

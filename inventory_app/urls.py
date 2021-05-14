@@ -59,4 +59,9 @@ urlpatterns = [
 
     path('do_admin_signup', UsersLoginViews.do_admin_signup, name="do_admin_signup"),
     path('do_merchant_signup', UsersLoginViews.do_merchant_signup, name="do_merchant_signup"),
+
+
+    path('admin_fcmtoken_save', AdminViews.admin_fcmtoken_save, name="admin_fcmtoken_save"),
+    path('firebase-messaging-sw.js', views.showFirebaseJS, name="show_firebase_js"),
+
 ]

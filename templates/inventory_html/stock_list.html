@@ -292,7 +292,7 @@ label {
              <td><a href="/reorder_level/{{product.id}}">{{product.reorder_level}}</a></td>
              <td>{{ product.timestamp}}</td>
              <td>{{ product.last_updated }}</td>
-             <td>{{ product.created_by }}</td>
+             <td>{{ request.user.username}}</td>
              <td><a class="btn btn-dark mb-1" href="/receive_items/{{product.id}}">Recieve Item</a> <a class="btn btn-warning" href="/issue_items/{{product.id}}">Issue Item</a></td>
              <td><a class="btn btn-info mb-1" href="/update_product/{{product.id}}">Update</a><a class="btn btn-danger" href="/delete_product/{{product.id}}">Delete</a></td>
 
