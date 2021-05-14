@@ -442,16 +442,96 @@ Home
 
     });
 </script>
+
+{#      Script for firebase set up #}
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-messaging.js"></script>
+
+    <script>
+        var firebaseConfig = {
+    apiKey: "AIzaSyBu0d0iW41tmu6rR9JJG-ODlwJgz5nmOPM",
+    authDomain: "kolentry-2569b.firebaseapp.com",
+    {#databaseURL: "https://kolentry-2569b-default-rtdb.firebaseio.com",#}
+    projectId: "kolentry-2569b",
+    storageBucket: "kolentry-2569b.appspot.com",
+    messagingSenderId: "858489842790",
+    appId: "1:858489842790:web:ae99848a638ad5850651a7",
+    measurementId: "G-MH7VTBJKJK"
+  };
+  // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const messaging=firebase.messaging();
+
+    function IntitalizeFireBaseMessaging() {
+        messaging
+            .requestPermission()
+            .then(function () {
+                console.log("Notification Permission");
+                return messaging.getToken();
+            })
+            .then(function (token) {
+                console.log("Token : "+token);
+                sendToServer(token);
+            })
+            .catch(function (reason) {
+                console.log(reason);
+            });
+    }
+
+    messaging.onMessage(function (payload) {
+        console.log(payload);
+        const notificationOption={
+            body:payload.notification.body,
+            icon:payload.notification.icon
+        };
+
+        if(Notification.permission==="granted"){
+            var notification=new Notification(payload.notification.title,notificationOption);
+
+            notification.onclick=function (ev) {
+                ev.preventDefault();
+                window.open(payload.notification.click_action,'_blank');
+                notification.close();
+            }
+        }
+
+    });
+    messaging.onTokenRefresh(function () {
+        messaging.getToken()
+            .then(function (newtoken) {
+                console.log("New Token : "+ newtoken);
+                sendToServer(newtoken);
+            })
+            .catch(function (reason) {
+                console.log(reason);
+            })
+    });
+
+    function sendToServer(token){
+        console.log("ajax token")
+        console.log(token);
+         $.ajax({
+                url:'{% url 'admin_fcmtoken_save' %}',
+                type:'POST',
+                data:{token:token},
+            })
+            .done(function(response){
+                if(response=="True"){
+                    console.log("Token Save")
+                }
+                else{
+                    console.log("Error in Token Save")
+                }
+            });
+    }
+    IntitalizeFireBaseMessaging();
+</script>
+
+
 {% endblock custom_js %}
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
