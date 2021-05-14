@@ -1,6 +1,9 @@
 {% extends "admin_templates/base_template.html" %}
 
 {% load static %}
+{% block page_title %}
+    <h3 class="list-product">List of Product Available in Stock</h3>
+{% endblock page_title %}
 {% block page_content %}
 
 <head>
@@ -26,11 +29,11 @@
     }
 label {
     color: white !important;
-    background: black !important;
+    background: #44e331 !important;
 }
 .dataTables_info{
     color: white !important;
-    background: black !important;
+    background: #44e331 !important;
 
 }
 .text-warning{
@@ -38,7 +41,7 @@ label {
         text-align: center;
 }
 .list-product{
-           color: red;
+           color:#44e331;
          text-align: center;
          margin: 1rem 0rem;
          font-size: 22px;
@@ -80,7 +83,7 @@ label {
 .paginate_button {
     border-radius: 30px;
     font-size: 20px;
-    color: black;
+    color: green;
     font-family: cursive;
 }
 .btn-primary-color{
@@ -100,27 +103,163 @@ label {
     color:white!important;
     border:1px solid grey;
     }
-    @media (max-width:768px){
-    .style-container{
-    overflow-x:scroll!important;
+    label {
+    color: white !important;
+    background: #052963 !important;
+    }
+    #table_id_filter {
+     font-family: math!important;
+     }
+     #table_id_length {
+     font-family: math!important;
+    }
+    #table_id_length > label {
+    padding: .6rem 2rem!important;
+    border-radius: 5px !important;
+    font-size: 18px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    }
+     select {
+    text-transform: none;
+    border: none;
+    border-radius: 2px;
+    padding: 1px 2px;
+    }
+    #table_id_filter > label {
+    padding: .6rem 2rem!important;
+    border-radius: 5px !important;
+    font-size: 18px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    margin: 0rem 8rem;
+    }
+    input[type="search"] {
+    border: 1px solid white;
+    border-radius: 2px;
+    position: relative;
+    left: 0.3rem;
+    }
+    #table_id_info {
+    font-family: math;
+    width: 100%;
+    border-radius:0px!important;
+    }
+   .dataTables_info {
+    color: white !important;
+    background: #404240 !important;
+    padding: .6rem;
+    }
+    #table_id_paginate {
+    display: flex;
+    justify-content: space-between;
+    margin: 1rem 0rem;
+    }
+   .paginate_button {
+    font-size: 20px;
+    color: #404240;
+    font-family: math;
+    font-weight: 900;
+    border-radius: 1px!important;
+    padding: .5rem!important;
+    }
+   .paginate_button:hover{
+    border: 2px solid #404240;
+    border-radius: 1px!important;
+    padding: .5rem!important;
+    color:#404240;
+    }
+
+    .odd {
+    border-bottom: 2px solid #000000a6;
+    }
+    .dataTables_empty {
+    color: red;
+    }
+    input:focus{
+    outline:none;
+    }
+
+    @media (min-width:300px) and (max-width:1300px){
+   .table-scroll {
+    width: 100%!important;
+    overflow-x: scroll!important;
     }
     .btn-primary-color {
     width: 100%!important;
+    }
+    #table_id_length > label {
+    padding: .6rem 4rem!important;
+    border-radius: 5px !important;
+    font-size: 18px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    width:100%
+    }
+    #table_id_filter > label {
+    padding: .7rem 2rem!important;
+    border-radius: 5px !important;
+    font-size: 13px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    margin: 0rem 0rem;
+    margin-top: 52px;
+    margin-bottom: 20px;
+    width:100%
+    }
+    }
+    @media (width:280px){
+      #table_id_length > label {
+    padding: .6rem 2rem!important;
+    border-radius: 5px !important;
+    font-size: 18px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    width:100%
+    }
+    #table_id_filter > label {
+    padding: .7rem .6rem!important;
+    border-radius: 5px !important;
+    font-size: 13px;
+    position: relative;
+    top: 1rem;
+    box-shadow: 0px 0px 5px #052963;
+    margin: 0rem 0rem;
+    margin-top: 52px;
+    margin-bottom: 20px;
+    width:100%
+    }
+
+
+    .table-scroll {
+    width: 100%!important;
+    overflow-x: scroll!important;
+    }
+    .btn-primary-color {
+    width: 100%!important;
+    }
     }
 
 
 
 </style>
 
-{% if user.is_authenticated %}
-<h2 class="text-warning">Welcome, {{ user.get_username }}. Thanks for logging in.</h2>
-{% else %}
-<p class="text-warning">Welcome, new user. Please log in.</p>
-{% endif %}
-<div class="container style-container" align="center">
-    <h3 class="list-product">List of Product Available in Stock</h3>
-    <a class="btn btn-primary-color btn-lg" href="/add_product">Add New Product</a>
+{#{% if user.is_authenticated %}#}
+{#<h2 class="text-warning">Welcome, {{ user.get_username }}. Thanks for logging in.</h2>#}
+{#{% else %}#}
+{#<p class="text-warning">Welcome, new user. Please log in.</p>#}
+{#{% endif %}#}
 
+<div class="container style-container" align="center">
+
+
+    <a class="btn btn-primary-color btn-lg" href="/add_product">Add New Product</a>
+<div class="table-scroll ">
     <table class="table" border="2px" id="table_id">
 
         <thead>
@@ -138,22 +277,22 @@ label {
         </thead>
         {% for product in stock %}
          <tr>
-{#             <td><img width="70px" height="70px" src="{{ product.product_image.url }}" /></td>#}
+{#           <td><img width="70px" height="70px" src="{{ product.product_image.url }}" /></td>#}
              <td>{{ product.item_name }}</td>
              <td>{{ product.category }}</td>
-             <td>
-                 {% if product.quantity <= product.reorder_level %}
-                 <div style="background-color: orangered;">
-                     <a  style="color: black;" href="/receive_items/{{product.id}}">{{ product.quantity }}</a>
-                 </div>
-                 {% else %}{{ product.quantity }}
-                 {% endif %}
-             </td>
+           {% if product.quantity <= product.reorder_level %}
+             <td style="background-color: red;">
+                 <a style="color: black;" href="/receive_items/{{ product.id }}">{{ product.quantity }}</a>
+                 </td>
+             {% else %}
+                 <td>{{ product.quantity }}</td>
+             {% endif %}
+
              <td>{{ product.measurement_unit }}</td>
              <td><a href="/reorder_level/{{product.id}}">{{product.reorder_level}}</a></td>
              <td>{{ product.timestamp}}</td>
              <td>{{ product.last_updated }}</td>
-             <td>{{ product.created_by }}</td>
+             <td>{{ request.user.username}}</td>
              <td><a class="btn btn-dark mb-1" href="/receive_items/{{product.id}}">Recieve Item</a> <a class="btn btn-warning" href="/issue_items/{{product.id}}">Issue Item</a></td>
              <td><a class="btn btn-info mb-1" href="/update_product/{{product.id}}">Update</a><a class="btn btn-danger" href="/delete_product/{{product.id}}">Delete</a></td>
 
@@ -161,6 +300,7 @@ label {
         {% endfor %}
 
         </table>
+</div>
 
 
 

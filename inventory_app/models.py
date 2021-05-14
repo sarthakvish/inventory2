@@ -1,42 +1,48 @@
+import os
+
 from django.core.validators import RegexValidator
 from django.db import models
 from django.contrib.auth.models import User, AbstractUser, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils.translation import ugettext_lazy as _
+from twilio.rest import Client
+from decouple import config
+from dotenv import load_dotenv
+load_dotenv()
 #
-class CustomUserManager(BaseUserManager):
-    """Define a model manager for User model with no username field."""
-
-    use_in_migrations = True
-
-    def _create_user(self, phone, password, **extra_fields):
-        """Create and save a User with the given phone and password."""
-        if not phone:
-            raise ValueError('The given phone must be set')
-        self.phone = phone
-        user = self.model(phone=phone, **extra_fields)
-        user.set_password(password)
-        user.save(using=self._db)
-        return user
-
-    def create_user(self, phone, password=None, **extra_fields):
-        """Create and save a regular User with the given phone and password."""
-        extra_fields.setdefault('is_staff', False)
-        extra_fields.setdefault('is_superuser', False)
-        return self._create_user(phone, password, **extra_fields)
-
-    def create_superuser(self, phone, password, **extra_fields):
-        """Create and save a SuperUser with the given phone and password."""
-        extra_fields.setdefault('is_staff', True)
-        extra_fields.setdefault('is_superuser', True)
-
-        if extra_fields.get('is_staff') is not True:
-            raise ValueError('Superuser must have is_staff=True.')
-        if extra_fields.get('is_superuser') is not True:
-            raise ValueError('Superuser must have is_superuser=True.')
-
-        return self._create_user(phone, password, **extra_fields)
+# class CustomUserManager(BaseUserManager):
+#     """Define a model manager for User model with no username field."""
+#
+#     use_in_migrations = True
+#
+#     def _create_user(self, phone, password, **extra_fields):
+#         """Create and save a User with the given phone and password."""
+#         if not phone:
+#             raise ValueError('The given phone must be set')
+#         self.phone = phone
+#         user = self.model(phone=phone, **extra_fields)
+#         user.set_password(password)
+#         user.save(using=self._db)
+#         return user
+#
+#     def create_user(self, phone, password=None, **extra_fields):
+#         """Create and save a regular User with the given phone and password."""
+#         extra_fields.setdefault('is_staff', False)
+#         extra_fields.setdefault('is_superuser', False)
+#         return self._create_user(phone, password, **extra_fields)
+#
+#     def create_superuser(self, phone, password, **extra_fields):
+#         """Create and save a SuperUser with the given phone and password."""
+#         extra_fields.setdefault('is_staff', True)
+#         extra_fields.setdefault('is_superuser', True)
+#
+#         if extra_fields.get('is_staff') is not True:
+#             raise ValueError('Superuser must have is_staff=True.')
+#         if extra_fields.get('is_superuser') is not True:
+#             raise ValueError('Superuser must have is_superuser=True.')
+#
+#         return self._create_user(phone, password, **extra_fields)
 class CustomUser(AbstractUser):
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,10}$',
                                  message="Phone number must be entered in the format: '+999999999'. Up to 10 digits allowed.")
@@ -46,22 +52,24 @@ class CustomUser(AbstractUser):
     user_type_choices = ((1, "Admin"), (2, "Staff"), (3, "Merchant"), (4, "Customer"))
     user_type = models.CharField(max_length=255, choices=user_type_choices, default=1)
 
-    USERNAME_FIELD = 'username'
-    REQUIRED_FIELDS = []
-
-    objects = CustomUserManager()
+    # USERNAME_FIELD = 'username'
+    REQUIRED_FIELDS = ['phone']
+    #
+    # objects = CustomUserManager()
     def __str__(self):
-        return self.username
+        return self.username +'-'+ self.phone
 
 # models for different type of users (Admin, merchant, staff, customer)
 class AdminUser(models.Model):
     profile_pic=models.FileField(default="")
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
 
 class StaffUser(models.Model):
     profile_pic=models.FileField(default="")
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
 
 class MerchantUser(models.Model):
@@ -71,14 +79,25 @@ class MerchantUser(models.Model):
     gst_details=models.CharField(max_length=255)
     address=models.TextField()
     is_added_by_admin=models.BooleanField(default=False)
+    fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
     objects=models.Manager()
+
+    def __str__(self):
+        if self.is_added_by_admin==True:
+            return self.auth_user_id.username + "-" + self.auth_user_id.phone + " " + "(private merchant)"
+        else:
+            return self.auth_user_id.username + "-" + self.auth_user_id.phone
 
 
 class CustomerUser(models.Model):
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     profile_pic=models.FileField(default="")
+    fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
+
+
+
 # models for Normal app.
 class Stock(models.Model):
     unit = 'un'
@@ -89,9 +108,11 @@ class Stock(models.Model):
         (kilogram, 'kg'),
         (bori, 'bori'),
     ]
-    # user = models.OneToOneField(User, on_delete=models.CASCADE, blank=True, null=True)
+    auth_user_id=models.CharField(max_length=5,blank=True, null=True)
     category = models.CharField(max_length=50, blank=True, null=True)
     item_name = models.CharField(max_length=50, blank=True, null=True)
+    provider_merchant_name=models.CharField(max_length=50, blank=True, null=True)
+    provider_merchant_contact=models.CharField(max_length=255,blank=True,null=True)
     quantity = models.IntegerField(default='0', blank=True, null=True)
     receive_quantity = models.IntegerField(default='0', blank=True, null=True)
     measurement_unit = models.CharField(choices=choices, max_length=255, default='Choose measurement unit')
@@ -109,7 +130,31 @@ class Stock(models.Model):
     def __str__(self):
         return self.item_name +' '+ str(self.quantity) +' '+ self.measurement_unit
 
+  #code for sms alert for this model- Stock inside save method- Twilio api
+
+    def save(self, *args, **kwargs):
+        if self.quantity < self.reorder_level:
+            account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
+            auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
+            client = Client(account_sid, auth_token)
+            to_list=['+919039724783', '+91 9131776595']
+            for num in to_list:
+                message = client.messages \
+                    .create(
+                    body=f'STOCK ALERT- Product {self.item_name} is about to finish from stock',
+                    from_='+12084490932',
+                    to=num
+                )
+
+                print(message.sid)
+
+
+
+        return super().save(*args, **kwargs)
+
+
 class StockHistory(models.Model):
+    auth_user_id = models.CharField(max_length=5, blank=True, null=True)
     category = models.CharField(max_length=50, blank=True, null=True)
     item_name = models.CharField(max_length=50, blank=True, null=True)
     quantity = models.IntegerField(default='0', blank=True, null=True)

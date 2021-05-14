@@ -1,17 +1,157 @@
 {% extends 'admin_templates/base_template.html' %}
+{% block custom_css %}
+<style>
+    .col-lg-4.col-md-4.col-sm-12 {
+            box-shadow: 1px 1px 6px darkolivegreen;
+            max-width: 31.1%!important;
+            margin: .8rem!important;
+        }
+           .card {
+           margin-top: 30px!important;
+           }
+          .card .card-stats .card-stats-title{
+          background-color:transparent!important;
+          color: black;
+          text-align: center;
+          }
+         .card-color-stock{
+          box-shadow: 1px 1px 4px blue!important;
+         }
+         .card-color-alert{
+        box-shadow: 1px 1px 4px red!important;
+         }
+         .card-color-month{
+         box-shadow: 1px 1px 4px green!important;
+         }
+        .row {
+         margin:6rem 0rem!important;
+         width: 100%;
+         }
+        .card-stats-items {
+         justify-content: space-around!important;
+         }
+         .card-wrap{
+         background-color: white;
+         margin: 10px 5px;
+         border-radius: 2px;
+         height: 60px;
+         }
+         .card-header {
+       padding-bottom: 0;
+       padding-top: 0!important;
+       }
+       .card-header {
+       padding: 0px 0px;
+       }
+       .card-icon {
+       margin: 15px 13px!important;
+       }
+       .user-month {
+       box-shadow: 0 0px 5px blue!important;
+       background-color: #6777ef!important;
+       }
+       .card-header-merchant h4 {
+          color: white;
+          padding-top: 1rem;
+        }
+        .card-body-merchant {
+         color: white;
+        font-size: 15px;
+       }
+       .stock-wrap{
+        background-color: #5cb85c;
+        box-shadow: 1px 1px 4px #5cb85c;
+        }
+       .card-header-stock h4{
+          color: white;
+          padding-top: 1rem;
+       }
+        .card-body-stock {
+         color: white;
+        font-size: 15px;
+       }
+       .bg-success {
+        background-color: #5cb85c !important;
+        }
+         .shadow-primary {
+          box-shadow: 0 2px 6px #5c5c61!important;
+         }
+         .records-wrap{
+          background-color: red;
+        box-shadow: 0px 0px 4px red;
+         }
+          .card-header-records h4{
+             color: white;
+             padding-top: 1rem;
+             font-size: 13px;
+             font-weight: bolder;
+          }
+       .card-body-records {
+        color: white;
+        font-size: 15px;
+       }
+       #orders-month{
+       color: #5cb85c!important;
+       }
+
+        .months-down-height{
+        background-color: green!important;
+        margin-top: 12rem!important;
+        }
+
+     .months-down-height li a{
+      padding: 2px 20px!important;
+      }
+      .select-link {
+       color:white!important;
+       text-align:center;
+       }
+
+       @media(max-width:768px){
+       .row{
+           flex-direction: column!important;
+       }
+       .col-lg-4.col-md-4.col-sm-12 {
+         max-width: 100%!important;
+         margin: .8rem 0rem!important;
+       }
+       .card-header-records h4 {
+        padding-top: .6rem;
+        font-size: 13px;
+        }
+        #sales-chart{
+        width:265px!important;
+        }
+        #balance-chart{
+        width:265px!important;
+        }
+       }
+       @media (min-width:768px) and (max-width:1300px){
+        .col-lg-4.col-md-4.col-sm-12{
+         max-width: 31%!important;
+         }
+         }
+
+
+
+
+
+
+</style>
+{% endblock custom_css %}
 {% block page_title %}
 Home
 {% endblock page_title %}
 {% block page_content %}
 <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="card card-statistic-2">
+              <div class="card card-statistic-2 card-color-month">
                 <div class="card-stats">
                   <div class="card-stats-title">Stock Statistics -
                     <div class="dropdown d-inline">
                       <a class="font-weight-600 dropdown-toggle" data-toggle="dropdown" href="#" id="orders-month">August</a>
-                      <ul class="dropdown-menu dropdown-menu-sm">
-                        <li class="dropdown-title">Select Month</li>
+                      <ul class="dropdown-menu dropdown-menu-sm months-down-height">
+                        <li class="select-link">Select Month</li>
                         <li><a href="#" class="dropdown-item">January</a></li>
                         <li><a href="#" class="dropdown-item">February</a></li>
                         <li><a href="#" class="dropdown-item">March</a></li>
@@ -19,7 +159,7 @@ Home
                         <li><a href="#" class="dropdown-item">May</a></li>
                         <li><a href="#" class="dropdown-item">June</a></li>
                         <li><a href="#" class="dropdown-item">July</a></li>
-                        <li><a href="#" class="dropdown-item active">August</a></li>
+                        <li><a href="#" class="dropdown-item">August</a></li>
                         <li><a href="#" class="dropdown-item">September</a></li>
                         <li><a href="#" class="dropdown-item">October</a></li>
                         <li><a href="#" class="dropdown-item">November</a></li>
@@ -42,51 +182,51 @@ Home
                     </div>
                   </div>
                 </div>
-                <div class="card-icon shadow-primary bg-primary">
+                <div class="card-icon shadow-primary bg-success">
                   <i class="fas fa-archive"></i>
                 </div>
-                <div class="card-wrap">
-                  <div class="card-header">
+                <div class="card-wrap stock-wrap">
+                  <div class="card-header-stock">
                     <h4>Total Type of Item in Stock</h4>
                   </div>
-                  <div class="card-body">
+                  <div class="card-body-stock">
                     {{ stock_count }}
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="card card-statistic-2">
+              <div class="card card-statistic-2 card-color-stock">
                 <div class="card-chart"><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                   <canvas id="balance-chart" height="79" width="336" style="display: block; width: 336px; height: 79px;" class="chartjs-render-monitor"></canvas>
                 </div>
                 <div class="card-icon shadow-primary bg-primary">
                   <i class="fas fa-dollar-sign"></i>
                 </div>
-                <div class="card-wrap">
-                  <div class="card-header">
+                <div class="card-wrap user-month">
+                  <div class="card-header-merchant">
                     <h4>Total Merchant Users</h4>
                   </div>
-                  <div class="card-body">
+                  <div class="card-body-merchant">
                       {{total_merchant_user}}
                   </div>
                 </div>
               </div>
             </div>
             <div class="col-lg-4 col-md-4 col-sm-12">
-              <div class="card card-statistic-2" >
+              <div class="card card-statistic-2 card-color-alert" >
 
                 <div class="card-chart" ><div class="chartjs-size-monitor" style="position: absolute; inset: 0px; overflow: hidden; pointer-events: none; visibility: hidden; z-index: -1;"><div class="chartjs-size-monitor-expand" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:1000000px;height:1000000px;left:0;top:0"></div></div><div class="chartjs-size-monitor-shrink" style="position:absolute;left:0;top:0;right:0;bottom:0;overflow:hidden;pointer-events:none;visibility:hidden;z-index:-1;"><div style="position:absolute;width:200%;height:200%;left:0; top:0"></div></div></div>
                   <canvas id="sales-chart" height="79" width="336" style="display: block; width: 336px; height: 79px;" class="chartjs-render-monitor"></canvas>
                 </div>
-                <div class="card-icon shadow-primary bg-primary" style="background: #ff0000!important;">
+                <div class="card-icon shadow-primary bg-danger" style="background: #ff0000!important;">
                   <i class="fas fa-shopping-bag"></i>
                 </div>
-                <div class="card-wrap">
-                  <div class="card-header">
+                <div class="card-wrap records-wrap">
+                  <div class="card-header-records">
                     <h4>Total Items to Reorder(Low Stock)</h4>
                   </div>
-                  <div class="card-body">
+                  <div class="card-body-records">
                       {{ stock_reorder_count }}
                   </div>
                 </div>
@@ -302,16 +442,96 @@ Home
 
     });
 </script>
+
+{#      Script for firebase set up #}
+
+
+<!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-app.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.5.0/firebase-messaging.js"></script>
+
+    <script>
+        var firebaseConfig = {
+    apiKey: "AIzaSyBu0d0iW41tmu6rR9JJG-ODlwJgz5nmOPM",
+    authDomain: "kolentry-2569b.firebaseapp.com",
+    {#databaseURL: "https://kolentry-2569b-default-rtdb.firebaseio.com",#}
+    projectId: "kolentry-2569b",
+    storageBucket: "kolentry-2569b.appspot.com",
+    messagingSenderId: "858489842790",
+    appId: "1:858489842790:web:ae99848a638ad5850651a7",
+    measurementId: "G-MH7VTBJKJK"
+  };
+  // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    const messaging=firebase.messaging();
+
+    function IntitalizeFireBaseMessaging() {
+        messaging
+            .requestPermission()
+            .then(function () {
+                console.log("Notification Permission");
+                return messaging.getToken();
+            })
+            .then(function (token) {
+                console.log("Token : "+token);
+                sendToServer(token);
+            })
+            .catch(function (reason) {
+                console.log(reason);
+            });
+    }
+
+    messaging.onMessage(function (payload) {
+        console.log(payload);
+        const notificationOption={
+            body:payload.notification.body,
+            icon:payload.notification.icon
+        };
+
+        if(Notification.permission==="granted"){
+            var notification=new Notification(payload.notification.title,notificationOption);
+
+            notification.onclick=function (ev) {
+                ev.preventDefault();
+                window.open(payload.notification.click_action,'_blank');
+                notification.close();
+            }
+        }
+
+    });
+    messaging.onTokenRefresh(function () {
+        messaging.getToken()
+            .then(function (newtoken) {
+                console.log("New Token : "+ newtoken);
+                sendToServer(newtoken);
+            })
+            .catch(function (reason) {
+                console.log(reason);
+            })
+    });
+
+    function sendToServer(token){
+        console.log("ajax token")
+        console.log(token);
+         $.ajax({
+                url:'{% url 'admin_fcmtoken_save' %}',
+                type:'POST',
+                data:{token:token},
+            })
+            .done(function(response){
+                if(response=="True"){
+                    console.log("Token Save")
+                }
+                else{
+                    console.log("Error in Token Save")
+                }
+            });
+    }
+    IntitalizeFireBaseMessaging();
+</script>
+
+
 {% endblock custom_js %}
-© 2021 GitHub, Inc.
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About

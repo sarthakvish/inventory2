@@ -1,14 +1,17 @@
 from django import forms
+from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
+from django.db.models import Q
 
-from .models import Stock, Invoice
+from .models import Stock, Invoice, MerchantUser,CustomUser
 
 
 class StockCreateForm(forms.ModelForm):
-    export_to_CSV = forms.BooleanField(required=False)
+    provider_merchant_name=forms.ModelChoiceField(queryset=MerchantUser.objects.all())
     class Meta:
         model = Stock
-        fields = ['category', 'item_name','quantity','measurement_unit','reorder_level']
+        fields = ['category', 'item_name','quantity','measurement_unit','reorder_level','provider_merchant_name', 'auth_user_id']
+        widgets= {'auth_user_id': forms.HiddenInput()}
 
 class IssueForm(forms.ModelForm):
     class Meta:

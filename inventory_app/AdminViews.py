@@ -1,7 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import ListView,CreateView,UpdateView,DetailView,View
-from inventory_app.models import CustomUser,MerchantUser
+from inventory_app.models import CustomUser, MerchantUser, AdminUser
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.files.storage import FileSystemStorage
 from django.contrib.messages.views import messages
@@ -10,12 +11,14 @@ from django.http import HttpResponseRedirect,HttpResponse
 from django.db.models import Q, Sum, F
 from inventory_app.models import Stock, StockHistory, MerchantUser
 
-@login_required(login_url="/admin/")
+
+@login_required(login_url="/userloginviews")
 def admin_home(request):
-    stock_count=Stock.objects.all().count()
-    stock_reorder_count=Stock.objects.filter(quantity__lte=F('reorder_level')).count()
-    total_issue_quantity= StockHistory.objects.aggregate(Sum('issue_quantity'))['issue_quantity__sum']
-    total_receive_quantity = StockHistory.objects.aggregate(Sum('receive_quantity'))['receive_quantity__sum']
+    auth_user_id = request.user.id
+    stock_count=Stock.objects.filter(auth_user_id=auth_user_id).count()
+    stock_reorder_count=Stock.objects.filter(auth_user_id=auth_user_id,quantity__lte=F('reorder_level')).count()
+    total_issue_quantity= StockHistory.objects.filter(auth_user_id=auth_user_id).aggregate(Sum('issue_quantity'))['issue_quantity__sum']
+    total_receive_quantity = StockHistory.objects.filter(auth_user_id=auth_user_id).aggregate(Sum('receive_quantity'))['receive_quantity__sum']
     total_merchant_user= MerchantUser.objects.all().count()
     context={
         'stock_count':stock_count,
@@ -26,79 +29,9 @@ def admin_home(request):
     }
     return render(request,"admin_templates/admin_home.html", context)
 
-# class CategoriesListView(ListView):
-#     model=Categories
-#     template_name="admin_templates/category_list.html"
-#     paginate_by=3
-#
-#     def get_queryset(self):
-#         filter_val=self.request.GET.get("filter","")
-#         order_by=self.request.GET.get("orderby","id")
-#         if filter_val!="":
-#             cat=Categories.objects.filter(Q(title__contains=filter_val) | Q(description__contains=filter_val)).order_by(order_by)
-#         else:
-#             cat=Categories.objects.all().order_by(order_by)
-#
-#         return cat
-#
-#     def get_context_data(self,**kwargs):
-#         context=super(CategoriesListView,self).get_context_data(**kwargs)
-#         context["filter"]=self.request.GET.get("filter","")
-#         context["orderby"]=self.request.GET.get("orderby","id")
-#         context["all_table_fields"]=Categories._meta.get_fields()
-#         return context
-#
-#
-# class CategoriesCreate(SuccessMessageMixin,CreateView):
-#     model=Categories
-#     success_message="Category Added!"
-#     fields="__all__"
-#     template_name="admin_templates/category_create.html"
-#
-# class CategoriesUpdate(SuccessMessageMixin,UpdateView):
-#     model=Categories
-#     success_message="Category Updated!"
-#     fields="__all__"
-#     template_name="admin_templates/category_update.html"
-#
-#
-# class SubCategoriesListView(ListView):
-#     model=SubCategories
-#     template_name="admin_templates/sub_category_list.html"
-#     paginate_by=3
-#
-#     def get_queryset(self):
-#         filter_val=self.request.GET.get("filter","")
-#         order_by=self.request.GET.get("orderby","id")
-#         if filter_val!="":
-#             cat=SubCategories.objects.filter(Q(title__contains=filter_val) | Q(description__contains=filter_val)).order_by(order_by)
-#         else:
-#             cat=SubCategories.objects.all().order_by(order_by)
-#
-#         return cat
-#
-#     def get_context_data(self,**kwargs):
-#         context=super(SubCategoriesListView,self).get_context_data(**kwargs)
-#         context["filter"]=self.request.GET.get("filter","")
-#         context["orderby"]=self.request.GET.get("orderby","id")
-#         context["all_table_fields"]=SubCategories._meta.get_fields()
-#         return context
-#
-#
-# class SubCategoriesCreate(SuccessMessageMixin,CreateView):
-#     model=SubCategories
-#     success_message="Sub Category Added!"
-#     fields="__all__"
-#     template_name="admin_templates/sub_category_create.html"
-#
-# class SubCategoriesUpdate(SuccessMessageMixin,UpdateView):
-#     model=SubCategories
-#     success_message="Sub Category Updated!"
-#     fields="__all__"
-#     template_name="admin_templates/sub_category_update.html"
-
+# @login_required(login_url="/userloginviews")
 class MerchantUserListView(ListView):
-    model=MerchantUser
+
     template_name="admin_templates/merchant_list.html"
     paginate_by=3
 
@@ -119,6 +52,8 @@ class MerchantUserListView(ListView):
         context["all_table_fields"]=MerchantUser._meta.get_fields()
         return context
 
+
+# @login_required(login_url="/userloginviews")
 class MerchantUserCreateView(SuccessMessageMixin,CreateView):
     template_name="admin_templates/merchant_create.html"
     model=CustomUser
@@ -153,6 +88,7 @@ class MerchantUserCreateView(SuccessMessageMixin,CreateView):
         messages.success(self.request,"Merchant User Created")
         return HttpResponseRedirect(reverse("merchant_list"))
 
+# @login_required(login_url="/userloginviews")
 class MerchantUserUpdateView(SuccessMessageMixin,UpdateView):
     template_name="admin_templates/merchant_update.html"
     model=CustomUser
@@ -194,67 +130,17 @@ class MerchantUserUpdateView(SuccessMessageMixin,UpdateView):
         return HttpResponseRedirect(reverse("merchant_list"))
 
 
+# views for firebase push notification
 
-class ProductView(View):
-    def get(self,request,*args,**kwargs):
-        categories=Categories.objects.filter(is_active=1)
-        categories_list=[]
-        for category in categories:
-            sub_category=SubCategories.objects.filter(is_active=1,category_id=category.id)
-            categories_list.append({"category":category,"sub_category":sub_category})
+@csrf_exempt
+def admin_fcmtoken_save(request):
+    if request.method=='POST':
+        token = request.POST.get("token")
+        try:
+            admin = AdminUser.objects.get(auth_user_id=request.user.id)
+            admin.fcm_token = token
+            admin.save()
+            return HttpResponse("True")
+        except:
+            return HttpResponse("False")
 
-        merchant_users=MerchantUser.objects.filter(auth_user_id__is_active=True)
-
-        return render(request,"admin_templates/product_create.html",{"categories":categories_list,"merchant_users":merchant_users})
-
-    def post(self,request,*args,**kwargs):
-        product_name=request.POST.get("product_name")
-        brand=request.POST.get("brand")
-        url_slug=request.POST.get("url_slug")
-        sub_category=request.POST.get("sub_category")
-        product_max_price=request.POST.get("product_max_price")
-        product_discount_price=request.POST.get("product_discount_price")
-        product_description=request.POST.get("product_description")
-        added_by_merchant=request.POST.get("added_by_merchant")
-        in_stock_total=request.POST.get("in_stock_total")
-        media_type_list=request.POST.getlist("media_type[]")
-        media_content_list=request.FILES.getlist("media_content[]")
-        title_title_list=request.POST.getlist("title_title[]")
-        title_details_list=request.POST.getlist("title_details[]")
-        about_title_list=request.POST.getlist("about_title[]")
-        product_tags=request.POST.get("product_tags")
-        long_desc=request.POST.get("long_desc")
-
-        subcat_obj=SubCategories.objects.get(id=sub_category)
-        merchant_user_obj=MerchantUser.objects.get(id=added_by_merchant)
-        product=Products(product_name=product_name,in_stock_total=in_stock_total,url_slug=url_slug,brand=brand,subcategories_id=subcat_obj,product_description=product_description,product_max_price=product_max_price,product_discount_price=product_discount_price,product_long_description=long_desc,added_by_merchant=merchant_user_obj)
-        product.save()
-
-        i=0
-        for media_content in media_content_list:
-            fs=FileSystemStorage()
-            filename=fs.save(media_content.name,media_content)
-            media_url=fs.url(filename)
-            product_media=ProductMedia(product_id=product,media_type=media_type_list[i],media_content=media_url)
-            product_media.save()
-            i=i+1
-
-        j=0
-        for title_title in title_title_list:
-            product_details=ProductDetails(title=title_title,title_details=title_details_list[j],product_id=product)
-            product_details.save()
-            j=j+1
-
-        for about in about_title_list:
-            product_about=ProductAbout(title=about,product_id=product)
-            product_about.save()
-
-        product_tags_list=product_tags.split(",")
-
-        for product_tag in product_tags_list:
-            product_tag_obj=ProductTags(product_id=product,title=product_tag)
-            product_tag_obj.save()
-
-        product_transaction=ProductTransaction(product_id=product,transaction_type=1,transaction_product_count=in_stock_total,transaction_description="Intially Item Added in Stocks")
-        product_transaction.save()
-        return HttpResponse("OK")

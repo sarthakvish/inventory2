@@ -1,0 +1,74 @@
+<style>
+    .mr-3{
+        width: 700px;
+        font-size: 18px;
+
+    }
+    .navbar-bg {
+    content: ' ';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 115px;
+    tom: 0;
+    background-color: #00C6D7;
+    z-index: -1;
+    }
+    .navbar .nav-link.nav-link-lg i {
+    font-size: 28px!important;
+    position: relative!important;
+    top: 8px!important;
+    }
+
+    @media (max-width:768px){
+      .mr-3{
+        width:0px;
+        }
+    }
+</style>
+
+
+{% load static %}
+
+<div class="navbar-bg"></div>
+      <nav class="navbar navbar-expand-lg main-navbar">
+        <form class="form-inline mr-auto">
+          <ul class="navbar-nav mr-3">
+          {% if user.is_authenticated %}
+            <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fa fa-bars" aria-hidden="true"></i></i></a></li>
+          {% endif %}
+            <li><a href="#" data-toggle="search" class="nav-link nav-link-lg d-sm-none"></a></li>
+             <h1 style="font-family: math;color: white;">Kolentory</h1>
+                    <marquee width="60%" direction="right" height="50px" style="color: white;position: relative;top: 15px;">
+                     Let's manage Your inventory with us!
+                    </marquee>
+          </ul>
+          <div class="search-element">
+           
+          </div>
+        </form>
+        <ul class="navbar-nav navbar-right">
+    
+          <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
+            <img alt="image" src="{% static '/img/avatar/avatar-1.png' %}" class="rounded-circle mr-1">
+            <div class="d-sm-none d-lg-inline-block">Hi, {{ request.user.username }}</div></a>
+            <div class="dropdown-menu dropdown-menu-right">
+              <div class="dropdown-title">Logged in 5 min ago</div>
+              <a href="features-profile.html" class="dropdown-item has-icon">
+                <i class="far fa-user"></i> Profile
+              </a>
+              <a href="features-activities.html" class="dropdown-item has-icon">
+                <i class="fas fa-bolt"></i> Activities
+              </a>
+              <a href="features-settings.html" class="dropdown-item has-icon">
+                <i class="fas fa-cog"></i> Settings
+              </a>
+              <div class="dropdown-divider"></div>
+              <a href="{% url 'admin_logout_process' %}" class="dropdown-item has-icon text-danger">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </a>
+            </div>
+          </li>
+        </ul>
+      </nav>

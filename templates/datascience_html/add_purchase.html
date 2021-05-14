@@ -1,4 +1,35 @@
 {% extends 'admin_templates/base_template.html' %}
+{% block custom_css %}
+<style>
+    .ui.form {
+    font-size: 1rem;
+    box-shadow: 0px 0px 8px grey!important;
+    padding: 1rem 1rem!important;
+    }
+    label {
+     margin-top: .5rem;
+    }
+    #id_item_name{
+    box-shadow: 1px 1px 4px darkslategrey;
+    }
+    #id_price{
+    box-shadow: 1px 1px 4px darkslategrey;
+    }
+    #id_quantity{
+    box-shadow: 1px 1px 4px darkslategrey;
+    }
+    .ui.positive {
+    background-color: #3f4240!important;
+    border-radius:5px!important;
+    }
+    .ui.button {
+    width: 100%!important;
+    }
+
+
+
+</style>
+{% endblock custom_css %}
 
 {% block title %}{% endblock %}
 {% block page_content %}

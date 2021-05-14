@@ -1,4 +1,8 @@
 <style>
+
+    .main-sidebar .sidebar-brand {
+        height: 150px;
+    }
     .main-sidebar .sidebar-menu li.menu-header {
     padding: 3px 15px;
     color: #191919;
@@ -7,7 +11,8 @@
     letter-spacing: 1.3px;
     font-weight: 600;
     text-align: center;
-    background-color:white;
+    background-color: #00c6d7;
+
 }
 .btn-primary-sidebar{
 
@@ -91,13 +96,13 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
       <div class="sidebar-brand">
-        <a href="/"><img src="{% static '/img/mastercard.png' %}" style="height: 85px;" /></a>
+        <a href="/"><img src="{% static '/img/inventory.png' %}" style="width: 100%;"/></a>
       </div>
       <div class="sidebar-brand sidebar-brand-sm">
-        <a href="/"><img src="{% static '/css/images/inventory.jpg' %}" /></a>
+        <a href="/"><img src="{% static '/img/inventory.png' %}"style="width: 100%;"/></a>
       </div>
       <ul class="sidebar-menu">
-        <li class="menu-header">KOLENTORY</li>
+        <li class="menu-header"></li>
 {#        {% comment %} CATEGORY MENU {% endcomment %}#}
 {#        {% url 'category_list' as category_list %}#}
 {#        {% url 'category_create' as category_create %}#}
@@ -122,6 +127,16 @@
 {#            <li class='{% if request.path == sub_category_create %} active {% endif %}'><a class="nav-link" href="{% url 'sub_category_create' %}">Add Sub Categories</a></li>#}
 {#          </ul>#}
 {#        </li>#}
+
+       {% comment %} Admin Dashboard Section MENU {% endcomment %}
+        {% url 'admin_home' as admin_home %}
+
+        <li class="dropdown {% if request.path == admin_home %} active {% endif %}">
+          <a href="#" class="nav-link has-dropdown"><i class="fa fa-dashboard" aria-hidden="true"></i><span>Dashboard</span></a>
+          <ul class="dropdown-menu">
+            <li class='{% if request.path == admin_home %} active {% endif %} {% if request.path == admin_home %} active {% endif %}' ><a class="nav-link" href="{% url 'admin_home' %}">Home</a></li>
+          </ul>
+        </li>
 
        {% comment %} Stock Section MENU {% endcomment %}
         {% url 'stock' as stock %}

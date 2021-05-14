@@ -7,3 +7,5 @@ matplotlib
 django-crispy-forms
 PyMySQL
 django-import-export
+twilio
+python-decouple
