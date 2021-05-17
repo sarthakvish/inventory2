@@ -49,7 +49,7 @@ class CustomUser(AbstractUser):
     phone = models.CharField(_('phone'),validators=[phone_regex],unique=True, max_length=10,blank=False,
                                     null=False)  # validators should be a list
 
-    user_type_choices = ((1, "Admin"), (2, "Staff"), (3, "Merchant"), (4, "Customer"))
+    user_type_choices = (('1', "Admin"), ('2', "Staff"), ('3', "Merchant"), ('4', "Customer"))
     user_type = models.CharField(max_length=255, choices=user_type_choices, default=1)
 
     # USERNAME_FIELD = 'username'
@@ -61,20 +61,27 @@ class CustomUser(AbstractUser):
 
 # models for different type of users (Admin, merchant, staff, customer)
 class AdminUser(models.Model):
-    profile_pic=models.FileField(default="")
+    profile_pic=models.FileField(default="media/profile.png")
+    company_name = models.CharField(max_length=255, blank=True)
+    gst_details = models.CharField(max_length=255, blank=True)
+    address = models.TextField(blank=True)
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
 
+    def __str__(self):
+        return self.auth_user_id.username + "-" + self.auth_user_id.phone
+
+
 class StaffUser(models.Model):
-    profile_pic=models.FileField(default="")
+    profile_pic=models.FileField(default="media/profile.png")
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
     fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
 
 class MerchantUser(models.Model):
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    profile_pic=models.FileField(default="")
+    profile_pic=models.FileField(default="media/profile.png")
     company_name=models.CharField(max_length=255)
     gst_details=models.CharField(max_length=255)
     address=models.TextField()
@@ -92,7 +99,7 @@ class MerchantUser(models.Model):
 
 class CustomerUser(models.Model):
     auth_user_id=models.OneToOneField(CustomUser,on_delete=models.CASCADE)
-    profile_pic=models.FileField(default="")
+    profile_pic=models.FileField(default="media/profile.png")
     fcm_token = models.TextField(default="")
     created_at=models.DateTimeField(auto_now_add=True)
 

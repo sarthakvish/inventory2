@@ -29,6 +29,40 @@ def admin_home(request):
     }
     return render(request,"admin_templates/admin_home.html", context)
 
+
+@login_required(login_url="/userloginviews")
+def admin_profile(request):
+    admin_user= AdminUser.objects.get(auth_user_id=request.user.id)
+    return render(request, "admin_templates/admin_profile.html", {"admin_user":admin_user})
+
+@login_required(login_url="/userloginviews")
+def admin_profile_save(request):
+    if request.method=="POST":
+        first_name=request.POST.get("first_name")
+        last_name=request.POST.get("last_name")
+        password=request.POST.get("password")
+        profile_pic = request.FILES.get("profile_pic")
+        try:
+            customuser=CustomUser.objects.get(id=request.user.id)
+            customuser.first_name=first_name
+            customuser.last_name=last_name
+            # if password!=None and password!="":
+            #     customuser.set_password(password)
+            customuser.save()
+            admin_user=AdminUser.objects.get(auth_user_id=request.user.id)
+
+            fs = FileSystemStorage()
+            filename = fs.save(profile_pic.name, profile_pic)
+            profile_pic_url = fs.url(filename)
+            admin_user.profile_pic=profile_pic_url
+            admin_user.save()
+            messages.success(request, "Successfully Updated Profile")
+            return HttpResponseRedirect(reverse("admin_profile"))
+        except:
+            messages.error(request, "Failed to Update Profile")
+            return HttpResponseRedirect(reverse("admin_profile"))
+    return HttpResponseRedirect(reverse("admin_profile"))
+
 # @login_required(login_url="/userloginviews")
 class MerchantUserListView(ListView):
 
