@@ -108,36 +108,10 @@
       </div>
       <ul class="sidebar-menu">
         <li class="menu-header"></li>
-{#        {% comment %} CATEGORY MENU {% endcomment %}#}
-{#        {% url 'category_list' as category_list %}#}
-{#        {% url 'category_create' as category_create %}#}
-{#        {% url 'category_update' id as category_update %}#}
-{#        <li class="dropdown {% if request.path == category_list %} active {% endif %}{% if request.path == category_create %} active {% endif %}{% if request.path == category_update %} active {% endif %}">#}
-{#          <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Category</span></a>#}
-{#          <ul class="dropdown-menu">#}
-{#            <li class='{% if request.path == category_list %} active {% endif %}{% if request.path == category_update %} active {% endif %}'><a class="nav-link" href="{% url 'category_list' %}">All Categories</a></li>#}
-{#            <li class='{% if request.path == category_create %} active {% endif %}'><a class="nav-link" href="{% url 'category_create' %}">Add Categories</a></li>#}
-{#          </ul>#}
-{#        </li>#}
-{##}
-{##}
-{#        {% comment %} SUB CATEGORY MENU {% endcomment %}#}
-{#        {% url 'sub_category_list' as sub_category_list %}#}
-{#        {% url 'sub_category_create' as sub_category_create %}#}
-{#        {% url 'sub_category_update' id as sub_category_update %}#}
-{#        <li class="dropdown {% if request.path == sub_category_list %} active {% endif %}{% if request.path == sub_category_create %} active {% endif %}{% if request.path == sub_category_update %} active {% endif %}">#}
-{#          <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Sub Category</span></a>#}
-{#          <ul class="dropdown-menu">#}
-{#            <li class='{% if request.path == sub_category_list %} active {% endif %}{% if request.path == sub_category_update %} active {% endif %}'><a class="nav-link" href="{% url 'sub_category_list' %}">All Sub Categories</a></li>#}
-{#            <li class='{% if request.path == sub_category_create %} active {% endif %}'><a class="nav-link" href="{% url 'sub_category_create' %}">Add Sub Categories</a></li>#}
-{#          </ul>#}
-{#        </li>#}
-
-       {% comment %} Admin Dashboard Section MENU {% endcomment %}
         {% url 'admin_home' as admin_home %}
 
         <li class="dropdown {% if request.path == admin_home %} active {% endif %}">
-          <a href="#" class="nav-link has-dropdown"><i class="fa fa-dashboard" aria-hidden="true"></i><span>Dashboard</span></a>
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-tachometer-alt" aria-hidden="true"></i><span>Dashboard</span></a>
           <ul class="dropdown-menu">
             <li class='{% if request.path == admin_home %} active {% endif %} {% if request.path == admin_home %} active {% endif %}' ><a class="nav-link" href="{% url 'admin_home' %}">Home</a></li>
           </ul>
@@ -150,13 +124,13 @@
         {% url 'list_history' as list_history %}
 {#        {% url 'chart' id as chart %}#}
         <li class="dropdown {% if request.path == stock %} active {% endif %}{% if request.path == import %} active {% endif %}{% if request.path == export %} active {% endif %}{% if request.path == list_history %} active {% endif %}{% if request.path == chart %} active {% endif %}">
-          <a href="#" class="nav-link has-dropdown"><i class="fa fa-stack-exchange" aria-hidden="true"></i><span>Stock Section</span></a>
+          <a href="#" class="nav-link has-dropdown"><i class="fas fa-boxes" aria-hidden="true"></i><span>Stock Section</span></a>
           <ul class="dropdown-menu">
             <li class='{% if request.path == stock %} active {% endif %} {% if request.path == stock %} active {% endif %}' ><a class="nav-link" href="{% url 'stock' %}">Stock</a></li>
             <li class='{% if request.path == export %} active {% endif %} {% if request.path == export %} active {% endif %}' ><a class="nav-link" href="{% url 'export' %}">Export Data</a></li>
             <li class='{% if request.path == import %} active {% endif %} {% if request.path == import %} active {% endif %}' ><a class="nav-link" href="{% url 'import' %}">Import from File</a></li>
             <li class='{% if request.path == list_history %} active {% endif %} {% if request.path == merchant_update %} active {% endif %}' ><a class="nav-link" href="{% url 'list_history' %}">History</a></li>
-            <li class='{% if request.path == 'chart' %} active {% endif %} {% if request.path == merchant_update %} active {% endif %}' ><a class="nav-link" href="/performance/chart/">Reports and Analysis</a></li>
+{#            <li class='{% if request.path == 'chart' %} active {% endif %} {% if request.path == merchant_update %} active {% endif %}' ><a class="nav-link" href="/performance/chart/">Reports and Analysis</a></li>#}
           </ul>
         </li>
 
@@ -174,14 +148,6 @@
           </ul>
         </li>
 
-
-{#       {% url 'product_view' as product_view %}#}
-{#        <li class="dropdown {% if request.path == product_view %} active {% endif %}">#}
-{#          <a href="#" class="nav-link has-dropdown"><i class="fas fa-dice-d6"></i><span>Products</span></a>#}
-{#          <ul class="dropdown-menu">#}
-{#            <li class='{% if request.path == product_view %} active {% endif %}'><a class="nav-link" href="{% url 'product_view' %}">Add Products</a></li>#}
-{#          </ul>#}
-{#        </li>#}
 
       </ul>
 

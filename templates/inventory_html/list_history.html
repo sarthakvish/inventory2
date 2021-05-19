@@ -62,7 +62,7 @@
 <p class="text-warning">Welcome, new user. Please log in.</p>
 {% endif %}
 <div class="container" align="center">
-    <a class="btn btn-danger btn-lg" href="/delete_history">Clear All History</a>
+    <a class="btn btn-danger btn-lg" href="/delete_history" onclick="return confirm('Are you sure? Your all history will be deleted.')">Clear All History</a>
    <div class="display_table">
         <table class='table'>
           <thead>

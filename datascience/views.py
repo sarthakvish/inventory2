@@ -64,7 +64,7 @@ def chart_select_view(request):
             # product_df=product_df.groupby('date', as_index=False)['total_price'].agg('sum')
             if chart_type!= "":
                 if date_from!="" and date_to!="":
-                    product_df=product_df[product_df['last_updated']>date_from & (product_df['last_updated']<date_to)]
+                    product_df=product_df[(product_df['last_updated']>date_from) & (product_df['last_updated']<date_to)]
                     product_df = product_df.groupby('last_updated', as_index=False)['issue_quantity']
                     print(product_df)
                     # function to get graph
