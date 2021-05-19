@@ -39,6 +39,8 @@ urlpatterns = [
     path('doLogin', UsersLoginViews.doLogin, name="do_login"),
     # PAGE FOR ADMIN
     path('admin_home', AdminViews.admin_home, name="admin_home"),
+    path('admin_profile', AdminViews.admin_profile, name="admin_profile"),
+    path('admin_profile_save', AdminViews.admin_profile_save, name="admin_profile_save"),
 
      # Staff Login URL Path
     path('staff_home', StaffViews.staff_home, name="staff_home"),

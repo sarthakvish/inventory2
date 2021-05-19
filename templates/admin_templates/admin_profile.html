@@ -1,0 +1,132 @@
+{% extends "admin_templates/base_template.html" %}
+{% load static %}
+{% block page_title %}
+Edit Profile
+{% endblock page_title %}
+{% block page_content %}
+
+<style>
+	.profile-pic{
+		max-width: 200px;
+		max-height:200px;
+		margin: 0 auto;
+		border-radius: 50%;
+	}
+</style>
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+          <div class="row">
+              <div class="col-md-6">
+            <!-- general form elements -->
+            <div class="card card-primary">
+              <div class="card-header">
+                <h3 class="card-title">Edit Profile</h3>
+              </div>
+              <!-- /.card-header -->
+              <!-- form start -->
+              <form role="form" action="{% url 'admin_profile_save' %}" method="post" enctype="multipart/form-data">
+                  {% csrf_token %}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Username</label>
+                    <input type="text" class="form-control" name="username" value="{{ request.user.username }}" disabled="disabled">
+                  </div>
+                  <div class="form-group">
+                    <label>Contact</label>
+                    <input type="text" class="form-control" name="phone" value="{{ request.user.phone }}" disabled="disabled">
+                  </div>
+                    <div class="form-group">
+                    <label>Company/Firm/Organization Name</label>
+                    <input type="text" class="form-control" name="company" value="{{ admin_user.company_name }}" disabled="disabled">
+                  </div>
+                   <div class="form-group">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" name="first_name" value="{{ user.first_name }}">
+                  </div>
+                  <div class="form-group">
+                    <label>Last Name</label>
+                    <input type="text" class="form-control" name="last_name" value="{{ user.last_name }}">
+                  </div>
+                   <div class="form-group">
+                    <label>Address</label>
+                    <input type="text" class="form-control" name="address" value="{{ admin_user.address }}">
+                  </div>
+                    <div class="form-group">
+                    <label>Profile Image</label>
+                    <input type="file" id="profile_pic" name="profile_pic">
+                  </div>
+
+                    <div class="form-group">
+                    <label>Change Password?</label>
+                    <input type="text" class="form-control" name="password" placeholder="Fill Only If You want to Change Password">
+                  </div>
+                   <div class="form-group">
+                      {% if messages %}
+                        {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                        <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                        {% endif %}
+                        {% if message.tags == 'success' %}
+                        <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                        {% endif %}
+                        {% endfor %}
+                      {% endif %}
+                    </div>
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer">
+                  <button type="submit" class="btn btn-primary btn-block">Save Profile</button>
+                </div>
+              </form>
+            </div>
+            <!-- /.card -->
+
+
+
+          </div>
+              <div class="col-md-6">
+                  <!-- general form elements -->
+                  <div class="card card-primary">
+                      <div class="card-header">
+                          <h3 class="card-title">Profile Image</h3>
+                      </div>
+                      <!-- /.card-header -->
+                      <!-- form start -->
+                          <div class="card card-body">
+                              <img class="profile-pic" src="{{ admin_user.profile_pic }}">
+                          </div>
+                          <div >
+                              {% if messages %}
+                                  {% for message in messages %}
+                                      {% if message.tags == 'error' %}
+                                          <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
+                                      {% endif %}
+                                      {% if message.tags == 'success' %}
+                                          <div class="alert alert-success" style="margin-top:10px">{{ message }}</div>
+                                      {% endif %}
+                                  {% endfor %}
+                              {% endif %}
+                          </div>
+
+
+                          <!-- /.card-body -->
+
+                          <div class="card-footer">
+{#                              <button type="submit" class="btn btn-primary btn-block">Save Profile</button>#}
+                          </div>
+
+                  </div>
+            <!-- /.card -->
+
+
+
+          </div>
+          </div>
+      </div>
+    </section>
+    <!-- /.content -->
+{% endblock page_content %}
+

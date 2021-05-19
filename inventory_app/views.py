@@ -161,10 +161,13 @@ def import_data(request):
             imported_data = dataset.load(new_employees.read().decode('utf-8'),format='xls')
             result = employee_resource.import_data(dataset, dry_run=True)
 
+        if result.has_errors():
+            messages.error(request, 'Uh oh! Something went wrong...')
 
-        if not result.has_errors():
+        else:
             # Import now
             employee_resource.import_data(dataset, dry_run=False)
+            messages.success(request, 'Your words were successfully imported')
 
     return render(request, 'inventory_html/import.html')
 

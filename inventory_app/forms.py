@@ -7,7 +7,7 @@ from .models import Stock, Invoice, MerchantUser,CustomUser
 
 
 class StockCreateForm(forms.ModelForm):
-    provider_merchant_name=forms.ModelChoiceField(queryset=MerchantUser.objects.all())
+    provider_merchant_name=forms.ModelChoiceField(queryset=MerchantUser.objects.all(), required=False)
     class Meta:
         model = Stock
         fields = ['category', 'item_name','quantity','measurement_unit','reorder_level','provider_merchant_name', 'auth_user_id']
