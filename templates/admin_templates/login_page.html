@@ -1,14 +1,87 @@
 {% extends "admin_templates/base_template.html" %}
 {% load static %}
 {% block page_content %}
+{% block custom_css %}
+<style>
+  .login-card {
+    width: 40%;
+    text-align: left;
+    color: whitesmoke;
+    background: linear-gradient(0deg, rgb(0 207 238) 0%, rgb(11 0 215) 100%);
+  }
 
-  <!-- /.login-logo -->
- <div align="center" style="width:100%">
-           <div class="card" style="width:40%; text-align:left; color:whitesmoke; background:midnightblue;" >
-  <div class="card-header"><h4>Login to Inventory Management System</h4></div>
-  <div class="card-body">
+  .sign-in-button {
+    box-shadow: 0 2px 6px #acb5f6;
+    background-color: #0a0dd8;
+    border-color: #6777ef;
+    border: 4px solid #0a0dd8;
+    border-radius: 3rem;
+  }
+
+  .password-right {
+    text-align: right;
+
+  }
+
+  .reset-password {
+    color: white;
+    font-size: 16px;
+  }
+
+  .reset-password:hover {
+    color: white;
+    font-size: 16.2px;
+
+  }
+
+  .text-center {
+    text-align: left !important;
+    margin-bottom: .5rem;
+  }
+
+  .new-signup {
+    color: white;
+    font-size: 15px;
+  }
+
+  .new-signup:hover {
+    color: white;
+    font-size: 16.1px;
+
+  }
+
+  @media(max-width:1000px) {
+    .main-content {
+      padding-left: 30px !important;
+    }
+
+    .login-card {
+      width: 100%;
+    }
+
+    #rc-imageselect,
+    .g-recaptcha {
+      transform: scale(0.77);
+      -webkit-transform: scale(0.77);
+      transform-origin: 0 0;
+      -webkit-transform-origin: 0 0;
+    }
+
+
+  }
+</style>
+{% endblock custom_css %}
+
+
+<!-- /.login-logo -->
+<div align="center" style="width:100%">
+  <div class="card login-card">
+    <div class="card-header">
+      <h4>Login to Inventory Management System</h4>
+    </div>
+    <div class="card-body">
       <form action="doLogin" method="post" id="demo-form">
-      {% csrf_token %}
+        {% csrf_token %}
         <div class="input-group mb-3">
           <input type="text" class="form-control" placeholder="Phone" name="email">
           <div class="input-group-append">
@@ -26,33 +99,40 @@
           </div>
         </div>
         <div class="input-group mb-3">
-                <div class="g-recaptcha" data-sitekey="6LeWtqUZAAAAAMO6YmxX5_XWel9hLWrb_iEiff26"></div>
+          <div class="g-recaptcha" data-sitekey="6LeWtqUZAAAAAMO6YmxX5_XWel9hLWrb_iEiff26"></div>
         </div>
         <div class="row">
           <!-- /.col -->
           <div class="col-12">
-            <button type="submit" class="btn btn-primary btn-block" >Sign In</button>
+            <button type="submit" class="btn btn-primary btn-block sign-in-button">Sign In</button>
           </div><!-- /.col -->
-            &nbsp;
-           <div class="col-12 text-center">
-             <a href="{}">Reset Password</a>
-           </div><!-- /.col -->
-            <div class="col-12 text-center">
-             <a href="/signup_admin">Admin Signup</a>
-            </div><!-- /.col -->
-            <div class="col-12 text-center">
-                <a href="/signup_merchant">Merchant Signup</a>
-            </div><!-- /.col -->
-            <div class="col-12 text-center">
-                <a href="{}">Staff Signup </a>
-            </div><!-- /.col -->
-            <div class="col-12 text-center">
-                <a href="{}">Customer Signup </a>
-            </div><!-- /.col -->
+          <br>
+          <div class="col-12 password-right">
+            <a href="{}" class="reset-password">Reset Password</a>
+          </div><!-- /.col -->
+          &nbsp;
+
+
+          <div class="col-12 text-center">
+            <a href="/signup_admin" class="new-signup">Admin Signup</a>
+          </div><!-- /.col -->
+
+          <div class="col-12 text-center">
+            <a href="/signup_merchant" class="new-signup">Merchant Signup</a>
+          </div><!-- /.col -->
+
+          <div class="col-12 text-center">
+            <a href="{}" class="new-signup">Staff Signup </a>
+          </div><!-- /.col -->
+
+          <div class="col-12 text-center">
+            <a href="{}" class="new-signup">Customer Signup </a>
+          </div><!-- /.col -->
         </div>
+
         <div class="row">
           {% if messages %}
-         <div class="col-12">
+          <div class="col-12">
             {% for message in messages %}
             {% if message.tags == 'error' %}
             <div class="alert alert-danger" style="margin-top:10px">{{ message }}</div>
@@ -75,13 +155,14 @@
 <!-- /.login-box -->
 
 <!-- jQuery -->
-<script src="{% static "plugins/jquery/jquery.min.js" %}"></script>
+<script src="{% static " plugins/jquery/jquery.min.js" %}"></script>
 <!-- Bootstrap 4 -->
-<script src="{% static "plugins/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+<script src="{% static " plugins/bootstrap/js/bootstrap.bundle.min.js" %}"></script>
 <!-- AdminLTE App -->
-<script src="{% static "dist/js/adminlte.min.js" %}"></script>
+<script src="{% static " dist/js/adminlte.min.js" %}"></script>
 <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
 </body>
+
 </html>
 {% endblock %}
