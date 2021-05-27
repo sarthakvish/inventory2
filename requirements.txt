@@ -10,3 +10,4 @@ django-import-export
 twilio
 python-decouple
 python-dotenv
+gunicorn==20.0.4
