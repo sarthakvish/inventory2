@@ -9,3 +9,4 @@ PyMySQL
 django-import-export
 twilio
 python-decouple
+python-dotenv
