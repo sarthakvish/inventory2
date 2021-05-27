@@ -2,22 +2,40 @@
 {% block custom_css %}
 <style>
   .card-header {
-    background-color: black!important;
-    color: white!important;
-    border: 2px solid white!important;
+    border: 2px solid white !important;
+    background: linear-gradient(0deg, rgba(0, 172, 238, 1) 0%, rgba(2, 126, 251, 1) 100%) !important;
+    color: white !important;
+
+  }
+
+  .form-group>label {
+    font-size: 16px !important;
+  }
+
+  .form-check-label {
+    font-size: 16px !important;
+  }
+
+  .form-control:not(.form-control-sm):not(.form-control-lg) {
+    box-shadow: 1px 1px 5px darkolivegreen;
+  }
+  .add-back-display {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  @media(max-width:900px) {
+    .card {
+      width: 100% !important;
     }
-    .form-group > label {
-     font-size: 16px!important;
-     }
-     .form-check-label {
-      font-size: 16px!important;
-      }
-      .form-control:not(.form-control-sm):not(.form-control-lg) {
-      box-shadow: 1px 1px 5px darkolivegreen;
-      }
+    .add-back-display {
+      flex-direction: column;
+    }
+    .btn-lg {
+      margin: .2rem;
+    }
 
-
-
+  }
 </style>
 {% endblock custom_css %}
 {% load crispy_forms_filters %}
@@ -28,17 +46,22 @@
 
 
 {% block page_content %}
-<div align="center" style="width:100%" >
-  <div class="card" style="width:50%; text-align:left;  margin-top: 20px; margin-bottom: 80px;box-shadow: 0px 1px 8px grey;!important" >
-  <div class="card-header"><h4>Fill Out the Details of Product Here</h4></div>
-  <div class="card-body">
-    <form class="login" method="POST" enctype="multipart/form-data">
-  <div  class="uniForm" >
-  {% csrf_token %}
-  {{ form|crispy }}
-  {{ image_form|crispy }}
-  <input type="hidden" name="auth_user_id" value="{{ request.user.id }}">
-  <button class="btn btn-success btn-lg" type="submit">Add Product</button>
-  <a href="/stock" class="btn btn-warning btn-lg" style="display: inlineblock;float: right">Back to Product</a>
-</div>
-{% endblock %}
+<div align="center" style="width:100%">
+  <div class="card"
+    style="width:50%; text-align:left;  margin-top: 20px; margin-bottom: 80px;box-shadow: 0px 1px 8px grey!important;">
+    <div class="card-header">
+      <h4>Fill Out the Details of Product Here</h4>
+    </div>
+    <div class="card-body">
+      <form class="login" method="POST" enctype="multipart/form-data">
+        <div class="uniForm">
+          {% csrf_token %}
+          {{ form|crispy }}
+          {{ image_form|crispy }}
+          <input type="hidden" name="auth_user_id" value="{{ request.user.id }}">
+          <div class="add-back-display">
+            <button class="btn btn-success btn-lg" type="submit">Add Product</button>
+            <a href="/stock" class="btn btn-warning btn-lg" style="display: inlineblock;">Back to Product</a>
+          </div>
+        </div>
+        {% endblock %}
