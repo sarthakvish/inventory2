@@ -2,7 +2,8 @@
 
 from pathlib import Path
 import os
-
+import django_heroku
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -87,20 +88,27 @@ WSGI_APPLICATION = 'inventory.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'inventory',
+#         'USER': 'sarthak',
+#         'PASSWORD': 'akshay',
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'inventory',
-        'USER': 'sarthak',
-        'PASSWORD': 'akshay',
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'deqe0kn5mnco0u',
+        'USER': 'ajzicsntbksyzz',
+        'PASSWORD': 'ba67a88995e0ee1fa9999df26f5d6cfba1a8bffd07f2eef39ca6f712ff52e6b9',
+        'HOST': 'ec2-52-5-247-46.compute-1.amazonaws.com',
+        'PORT': '5432',
     }
 }
-
-
-# Password validation
-# https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -158,3 +166,5 @@ AUTH_USER_MODEL = 'inventory_app.CustomUser'
 # 'signup': 'inventory_app.forms.CustomSignupForm',
 # }
 # ACCOUNT_EMAIL_REQUIRED = False
+
+
