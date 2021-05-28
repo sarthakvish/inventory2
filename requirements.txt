@@ -14,3 +14,4 @@ gunicorn==20.0.4
 whitenoise
 tablib~=3.0.0
 requests~=2.25.1
+django-bootstrap4
