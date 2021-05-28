@@ -1,1 +1,1 @@
-web:  waitress-serve --port=8000 inventory.wsgi:application
+web: gunicorn inventory.wsgi --log-file -
