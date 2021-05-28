@@ -2,7 +2,8 @@
 
 from pathlib import Path
 import os
-
+import django_heroku
+import dj_database_url
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -97,7 +98,13 @@ DATABASES = {
         'PORT': '3306',
     }
 }
-
+# DATABASES = {
+#     'default': {
+#                 'ENGINE': 'django.db.backends.mysql',
+#                 'NAME': dj_database_url.config(default=os.environ[DATABASE_URL],
+#                 ssl_require=False),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -158,3 +165,5 @@ AUTH_USER_MODEL = 'inventory_app.CustomUser'
 # 'signup': 'inventory_app.forms.CustomSignupForm',
 # }
 # ACCOUNT_EMAIL_REQUIRED = False
+
+
