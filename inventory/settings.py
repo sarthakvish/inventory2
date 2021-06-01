@@ -14,9 +14,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = '7c*4^2b^)8xd2ao$k5m%4oqc6pccc*sk$-pzgb#=$eayew21hk'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -87,27 +87,27 @@ WSGI_APPLICATION = 'inventory.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'inventory',
-#         'USER': 'sarthak',
-#         'PASSWORD': 'akshay',
-#         'HOST': 'localhost',
-#         'PORT': '3306',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'deqe0kn5mnco0u',
-        'USER': 'ajzicsntbksyzz',
-        'PASSWORD': 'ba67a88995e0ee1fa9999df26f5d6cfba1a8bffd07f2eef39ca6f712ff52e6b9',
-        'HOST': 'ec2-52-5-247-46.compute-1.amazonaws.com',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'inventory',
+        'USER': 'sarthak',
+        'PASSWORD': 'akshay',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'deqe0kn5mnco0u',
+#         'USER': 'ajzicsntbksyzz',
+#         'PASSWORD': 'ba67a88995e0ee1fa9999df26f5d6cfba1a8bffd07f2eef39ca6f712ff52e6b9',
+#         'HOST': 'ec2-52-5-247-46.compute-1.amazonaws.com',
+#         'PORT': '5432',
+#     }
+# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {
