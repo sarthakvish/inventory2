@@ -145,20 +145,23 @@ class Stock(models.Model):
     # code for sms alert for this model- Stock inside save method- Twilio api
 
     def save(self, *args, **kwargs):
-        if self.quantity < self.reorder_level:
-            account_sid = os.environ.get("TWILIO_ACCOUNT_SID")
-            auth_token = os.environ.get("TWILIO_AUTH_TOKEN")
-            client = Client(account_sid, auth_token)
-            to_list = ['+919039724783']
-            for num in to_list:
-                message = client.messages \
-                    .create(
-                    body=f'STOCK ALERT- Product {self.item_name} is about to finish from stock',
-                    from_='+12084490932',
-                    to=num
-                )
+        try:
+            if self.quantity < self.reorder_level:
+                account_sid = "ACc36e9e5284dd30dd5af3052730234465"
+                auth_token = "bc120a369c86b94c8e268a7c7d80a0b9"
+                client = Client(account_sid, auth_token)
+                to_list = ['+919039724783']
+                for num in to_list:
+                    message = client.messages \
+                        .create(
+                        body=f'STOCK ALERT- Product {self.item_name} is about to finish from stock',
+                        from_='+12084490932',
+                        to=num
+                    )
 
-                print(message.sid)
+                    print(message.sid)
+        except:
+            pass
 
         return super().save(*args, **kwargs)
 
