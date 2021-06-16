@@ -66,4 +66,6 @@ urlpatterns = [
     path('admin_fcmtoken_save', AdminViews.admin_fcmtoken_save, name="admin_fcmtoken_save"),
     path('firebase-messaging-sw.js', views.showFirebaseJS, name="show_firebase_js"),
 
+
+
 ]

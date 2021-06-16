@@ -5,9 +5,10 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from tablib import Dataset
 
-from inventory_app.models import Stock, StockHistory
-from inventory_app.forms import StockCreateForm, ReceiveForm, IssueForm, ReorderLevelForm
+from inventory_app.models import Stock, StockHistory, Dropdown
+from inventory_app.forms import StockCreateForm, ReceiveForm, IssueForm, ReorderLevelForm, DropdownForm
 from django.http import HttpResponse, HttpResponseRedirect
+from .filter import StockFilter
 import csv
 
 # for normal app-->
@@ -16,13 +17,39 @@ from inventory_app.resources import StockResource
 
 @login_required(login_url="/userloginviews")
 def stock_page_view(request):
+
     auth_user_id = request.user.id
     print(auth_user_id)
-    stocks = Stock.objects.filter(auth_user_id=auth_user_id)
+    stocks = Stock.objects.all()
+
+
+#  Ritik code begins here
+#    form = DropdownForm()
+#  var1 = Dropdown.objects.last()
+#  drop = str(var1)
+    if request.method == 'POST':
+        formdate= request.POST.get('formdate')
+        todate = request.POST.get('todate')
+        searchResult = Stock.objects.raw('SELECT * FROM stock WHERE timestamp between "'+str(formdate)+'" and "'+str(todate)+'"')
+        print(searchResult)
+        return render(request, 'inventory_html/stock_list.html', {'stocks': stocks, 'data': searchResult})
+
+    else:
+        filter_list = StockFilter(request.POST, queryset=stocks)
+
+# Ritik's code end here
+
     # below statement is to fetch data from database and passing it in the form of list for use of twilio
     # stockitem=list(Stock.objects.all().values_list('item_name', flat=True))
     # print(stockitem)
-    return render(request, 'inventory_html/stock_list.html', {'stock': stocks})
+        return render(request, 'inventory_html/stock_list.html', {'stocks': stocks, 'filter': filter_list})
+
+#@login_required(login_url="/userloginviews")
+#def refresh(request):
+
+
+
+
 
 
 @login_required(login_url="/userloginviews")

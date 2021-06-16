@@ -3,15 +3,18 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db.models import Q
 
-from .models import Stock, Invoice, MerchantUser,CustomUser
+from .models import Stock, Invoice, MerchantUser, CustomUser, Dropdown
 
 
 class StockCreateForm(forms.ModelForm):
-    provider_merchant_name=forms.ModelChoiceField(queryset=MerchantUser.objects.all(), required=False)
+    provider_merchant_name = forms.ModelChoiceField(queryset=MerchantUser.objects.all(), required=False)
+
     class Meta:
         model = Stock
-        fields = ['category', 'item_name','quantity','measurement_unit','reorder_level','provider_merchant_name', 'auth_user_id']
-        widgets= {'auth_user_id': forms.HiddenInput()}
+        fields = ['category', 'sub_category', 'item_name', 'quantity', 'measurement_unit', 'reorder_level',
+                  'provider_merchant_name', 'location', 'auth_user_id', ]
+        widgets = {'auth_user_id': forms.HiddenInput()}
+
 
 class IssueForm(forms.ModelForm):
     class Meta:
@@ -24,10 +27,23 @@ class ReceiveForm(forms.ModelForm):
         model = Stock
         fields = ['receive_quantity', 'receive_by']
 
+
 class ReorderLevelForm(forms.ModelForm):
     class Meta:
         model = Stock
         fields = ['reorder_level']
+
+
+class DropdownForm(forms.ModelForm):
+    class Meta:
+        model = Dropdown
+        fields = ['dropdown']
+
+        widget = {
+            'dropdown': forms.Select(attrs={
+                'onChange': 'if(this.value != "") {this.form.submit();}'}),
+
+        }
 
 
 # forms for Invoice management
@@ -46,14 +62,15 @@ class InvoiceForm(forms.ModelForm):
     class Meta:
         model = Invoice
         fields = ['name', 'phone_number', 'invoice_date',
-                'line_one', 'line_one_quantity', 'line_one_unit_price', 'line_one_total_price',
-                'total', 'paid', 'invoice_type'
-                ]
+                  'line_one', 'line_one_quantity', 'line_one_unit_price', 'line_one_total_price',
+                  'total', 'paid', 'invoice_type'
+                  ]
+
+
 # for mobile login signup
 
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UserCreationForm
-
 
 # class UserAdminCreationForm(UserCreationForm):
 #     """
