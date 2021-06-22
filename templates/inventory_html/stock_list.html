@@ -2,251 +2,290 @@
 
 {% load static %}
 {% block page_title %}
-    <h3 class="list-product">List of Product Available in Stock</h3>
+<h3 class="list-product">List of Product Available in Stock</h3>
 {% endblock page_title %}
 {% block page_content %}
 
 <head>
-<link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/dashboard.css' %}">
 </head>
 <style>
-.style-container{
-    max-width: 1215px!important;
-    margin: 1rem 0rem;
+    .style-container {
+        max-width: 1215px !important;
+        margin: 1rem 0rem;
     }
+
     .table:not(.table-sm):not(.table-md):not(.dataTable) th {
-    padding:9px 15px!important;
-    height:60px;
-    vertical-align: middle;
-    border-bottom: 1px solid grey;
+        padding: 9px 15px !important;
+        height: 60px;
+        vertical-align: middle;
+        border-bottom: 1px solid grey;
     }
-.table:not(.table-sm):not(.table-md):not(.dataTable) td, .table:not(.table-sm):not(.table-md):not(.dataTable) th {
-    padding: 9px 15px!important;
-    height: 60px;
-    vertical-align: middle;
 
+    .table:not(.table-sm):not(.table-md):not(.dataTable) td, .table:not(.table-sm):not(.table-md):not(.dataTable) th {
+        padding: 9px 15px !important;
+        height: 60px;
+        vertical-align: middle;
 
-    }
-label {
-    color: white !important;
-    background: #44e331 !important;
-}
-.dataTables_info{
-    color: white !important;
-    background: #44e331 !important;
-
-}
-.text-warning{
-        color: #4e4e55!important;
-        text-align: center;
-}
-.list-product{
-           color:#44e331;
-         text-align: center;
-         margin: 1rem 0rem;
-         font-size: 22px;
-}
-.table-light tbody+tbody, .table-light td, .table-light th, .table-light thead th {
-    border: 2px solid black;
-}
-
-.btn:not(:disabled):not(.disabled) {
-    cursor: pointer;
-    border-radius: 30px;
-    width: 100%;
-}
-#table_id_length{
-    text-align: initial !important;
-    height: 0px !important;
-    font-size: 20px !important;
-    font-family: cursive;
-}
-#table_id_info{
-    font-size: 20px;
-    border-radius: 5px;
-    width: 30%;
-    font-family: cursive;
-}
-#table_id_filter{
-    text-align: end;
-    font-family: cursive;
-}
-#table_id_length > label{
-    padding: 3px !important;
-    border-radius: 8px !important;
-    font-size: 20px;
-}
-#table_id_filter > label{
-    padding: 3px !important;
-    border-radius: 8px !important;
-}
-.paginate_button {
-    border-radius: 30px;
-    font-size: 20px;
-    color: green;
-    font-family: cursive;
-}
-.btn-primary-color{
-    width: 32%!important;
-    box-shadow: 0 2px 6px #acb5f6!important;
-    background-color: #44e331!important;
-    border-color: #44e331!important;
-    font-size: 18px!important;
-    color: white;
-    border-radius: 4px!important;
-    margin: 1rem 0rem 0.6rem 0rem!important;
-    float: right;
 
     }
-    .btn-primary-color:hover{
-    background-color:green!important;
-    color:white!important;
-    border:1px solid grey;
-    }
+
     label {
-    color: white !important;
-    background: #052963 !important;
+        color: white !important;
+        background: #44e331 !important;
     }
-    #table_id_filter {
-     font-family: math!important;
-     }
-     #table_id_length {
-     font-family: math!important;
+
+    .dataTables_info {
+        color: white !important;
+        background: #44e331 !important;
+
     }
-    #table_id_length > label {
-    padding: .6rem 2rem!important;
-    border-radius: 5px !important;
-    font-size: 18px;
-    position: relative;
-    top: 1rem;
-    box-shadow: 0px 0px 5px #052963;
+
+    .text-warning {
+        color: #4e4e55 !important;
+        text-align: center;
     }
-     select {
-    text-transform: none;
-    border: none;
-    border-radius: 2px;
-    padding: 1px 2px;
+
+    .list-product {
+        color: #44e331;
+        text-align: center;
+        margin: 1rem 0rem;
+        font-size: 22px;
     }
-    #table_id_filter > label {
-    padding: .6rem 2rem!important;
-    border-radius: 5px !important;
-    font-size: 18px;
-    position: relative;
-    top: 1rem;
-    box-shadow: 0px 0px 5px #052963;
-    margin: 0rem 8rem;
+
+    .table-light tbody + tbody, .table-light td, .table-light th, .table-light thead th {
+        border: 2px solid black;
     }
-    input[type="search"] {
-    border: 1px solid white;
-    border-radius: 2px;
-    position: relative;
-    left: 0.3rem;
+
+    .btn:not(:disabled):not(.disabled) {
+        cursor: pointer;
+        border-radius: 30px;
+        width: 100%;
     }
+
+    #table_id_length {
+        text-align: initial !important;
+        height: 0px !important;
+        font-size: 20px !important;
+        font-family: cursive;
+    }
+
     #table_id_info {
-    font-family: math;
-    width: 100%;
-    border-radius:0px!important;
+        font-size: 20px;
+        border-radius: 5px;
+        width: 30%;
+        font-family: cursive;
     }
-   .dataTables_info {
-    color: white !important;
-    background: #404240 !important;
-    padding: .6rem;
+
+    #table_id_filter {
+        text-align: end;
+        font-family: cursive;
     }
+
+    #table_id_length > label {
+        padding: 3px !important;
+        border-radius: 8px !important;
+        font-size: 20px;
+    }
+
+    #table_id_filter > label {
+        padding: 3px !important;
+        border-radius: 8px !important;
+    }
+
+    .paginate_button {
+        border-radius: 30px;
+        font-size: 20px;
+        color: green;
+        font-family: cursive;
+    }
+
+    .btn-primary-color {
+        width: 32% !important;
+        box-shadow: 0 2px 6px #acb5f6 !important;
+        background-color: #44e331 !important;
+        border-color: #44e331 !important;
+        font-size: 18px !important;
+        color: white;
+        border-radius: 4px !important;
+        margin: 1rem 0rem 0.6rem 0rem !important;
+        float: right;
+
+    }
+
+    .btn-primary-color:hover {
+        background-color: green !important;
+        color: white !important;
+        border: 1px solid grey;
+    }
+
+    label {
+        color: white !important;
+        background: #052963 !important;
+    }
+
+    #table_id_filter {
+        font-family: math !important;
+    }
+
+    #table_id_length {
+        font-family: math !important;
+    }
+
+    #table_id_length > label {
+        padding: .6rem 2rem !important;
+        border-radius: 5px !important;
+        font-size: 18px;
+        position: relative;
+        top: 1rem;
+        box-shadow: 0px 0px 5px #052963;
+    }
+
+    select {
+        text-transform: none;
+        border: none;
+        border-radius: 2px;
+        padding: 1px 2px;
+    }
+
+    #table_id_filter > label {
+        padding: .6rem 2rem !important;
+        border-radius: 5px !important;
+        font-size: 18px;
+        position: relative;
+        top: 1rem;
+        box-shadow: 0px 0px 5px #052963;
+        margin: 0rem 8rem;
+    }
+
+    input[type="search"] {
+        border: 1px solid white;
+        border-radius: 2px;
+        position: relative;
+        left: 0.3rem;
+    }
+
+    #table_id_info {
+        font-family: math;
+        width: 100%;
+        border-radius: 0px !important;
+    }
+
+    .dataTables_info {
+        color: white !important;
+        background: #404240 !important;
+        padding: .6rem;
+    }
+
     #table_id_paginate {
-    display: flex;
-    justify-content: space-between;
-    margin: 1rem 0rem;
+        display: flex;
+        justify-content: space-between;
+        margin: 1rem 0rem;
     }
-   .paginate_button {
-    font-size: 20px;
-    color: #404240;
-    font-family: math;
-    font-weight: 900;
-    border-radius: 1px!important;
-    padding: .5rem!important;
+
+    .paginate_button {
+        font-size: 20px;
+        color: #404240;
+        font-family: math;
+        font-weight: 900;
+        border-radius: 1px !important;
+        padding: .5rem !important;
     }
-   .paginate_button:hover{
-    border: 2px solid #404240;
-    border-radius: 1px!important;
-    padding: .5rem!important;
-    color:#404240;
+
+    .paginate_button:hover {
+        border: 2px solid #404240;
+        border-radius: 1px !important;
+        padding: .5rem !important;
+        color: #404240;
     }
 
     .odd {
-    border-bottom: 2px solid #000000a6;
+        border-bottom: 2px solid #000000a6;
     }
+
     .dataTables_empty {
-    color: red;
-    }
-    input:focus{
-    outline:none;
+        color: red;
     }
 
-    @media (min-width:300px) and (max-width:1300px){
-   .table-scroll {
-    width: 100%!important;
-    overflow-x: scroll!important;
-    }
-    .btn-primary-color {
-    width: 100%!important;
-    }
-    #table_id_length > label {
-    padding: .6rem 4rem!important;
-    border-radius: 5px !important;
-    font-size: 18px;
-    position: relative;
-    top: 1rem;
-    box-shadow: 0px 0px 5px #052963;
-    width:100%
-    }
-    #table_id_filter > label {
-    padding: .7rem 2rem!important;
-    border-radius: 5px !important;
-    font-size: 13px;
-    position: relative;
-    top: 1rem;
-    box-shadow: 0px 0px 5px #052963;
-    margin: 0rem 0rem;
-    margin-top: 52px;
-    margin-bottom: 20px;
-    width:100%
-    }
-    }
-    @media (width:280px){
-      #table_id_length > label {
-    padding: .6rem 2rem!important;
-    border-radius: 5px !important;
-    font-size: 18px;
-    position: relative;
-    top: 1rem;
-    box-shadow: 0px 0px 5px #052963;
-    width:100%
-    }
-    #table_id_filter > label {
-    padding: .7rem .6rem!important;
-    border-radius: 5px !important;
-    font-size: 13px;
-    position: relative;
-    top: 1rem;
-    box-shadow: 0px 0px 5px #052963;
-    margin: 0rem 0rem;
-    margin-top: 52px;
-    margin-bottom: 20px;
-    width:100%
+    input:focus {
+        outline: none;
     }
 
+    @media (min-width: 300px) and (max-width: 1300px) {
+        .table-scroll {
+            width: 100% !important;
+            overflow-x: scroll !important;
+        }
 
-    .table-scroll {
-    width: 100%!important;
-    overflow-x: scroll!important;
+        .btn-primary-color {
+            width: 100% !important;
+        }
+
+        #table_id_length > label {
+            padding: .6rem 4rem !important;
+            border-radius: 5px !important;
+            font-size: 18px;
+            position: relative;
+            top: 1rem;
+            box-shadow: 0px 0px 5px #052963;
+            width: 100%
+        }
+
+        #table_id_filter > label {
+            padding: .7rem 2rem !important;
+            border-radius: 5px !important;
+            font-size: 13px;
+            position: relative;
+            top: 1rem;
+            box-shadow: 0px 0px 5px #052963;
+            margin: 0rem 0rem;
+            margin-top: 52px;
+            margin-bottom: 20px;
+            width: 100%
+        }
     }
-    .btn-primary-color {
-    width: 100%!important;
+
+    @media (width: 280px) {
+        #table_id_length > label {
+            padding: .6rem 2rem !important;
+            border-radius: 5px !important;
+            font-size: 18px;
+            position: relative;
+            top: 1rem;
+            box-shadow: 0px 0px 5px #052963;
+            width: 100%
+        }
+
+        #table_id_filter > label {
+            padding: .7rem .6rem !important;
+            border-radius: 5px !important;
+            font-size: 13px;
+            position: relative;
+            top: 1rem;
+            box-shadow: 0px 0px 5px #052963;
+            margin: 0rem 0rem;
+            margin-top: 52px;
+            margin-bottom: 20px;
+            width: 100%
+        }
+
+
+        .table-scroll {
+            width: 100% !important;
+            overflow-x: scroll !important;
+        }
+
+        .btn-primary-color {
+            width: 100% !important;
+        }
     }
-    }
 
-
-
+.wrapper{
+    display: inline;
+    margin :0 ;
+    padding:0 ;
+    text-align: left;
+}
 </style>
 
 {#{% if user.is_authenticated %}#}
@@ -256,56 +295,114 @@ label {
 {#{% endif %}#}
 
 <div class="container style-container" align="center">
+    <div class="wrapper">
+        <!--Ritik code begins -->
+        <form method="post" name="company"  >
+            {% csrf_token %}
+            {{filter.form}}
+
+            <button class="btn btn-primary-color" value="Submit" type="submit">Submit</button>
+            <hr>
+            <h5 style="font-style:italic; text-align:center;">Search By Date</h5>
+            From :<input type="date" name="formdate">
+            To : <input type="date" name="todate" >
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+    <!--Ritik code End -->
 
 
     <a class="btn btn-primary-color btn-lg" href="/add_product">Add New Product</a>
-<div class="table-scroll ">
-    <table class="table" border="2px" id="table_id">
 
-        <thead>
+    <div class="table-scroll ">
+        <table class="table" border="2px" id="table_id">
 
-            <th>Item Name</th>
-            <th>Item Category</th>
-            <th>Item Quantity</th>
-            <th>Measurement Unit</th>
-            <th>Reorder Level</th>
-            <th>Timestamp</th>
-            <th>Last Updated</th>
-            <th>Created By</th>
-            <th>Manage Stock</th>
-            <th>Actions</th>
-        </thead>
-        {% for product in stock %}
-         <tr>
-{#           <td><img width="70px" height="70px" src="{{ product.product_image.url }}" /></td>#}
-             <td>{{ product.item_name }}</td>
-             <td>{{ product.category }}</td>
-           {% if product.quantity <= product.reorder_level %}
-             <td style="background-color: red;">
-                 <a style="color: black;" href="/receive_items/{{ product.id }}">{{ product.quantity }}</a>
-                 </td>
-             {% else %}
-                 <td>{{ product.quantity }}</td>
-             {% endif %}
+            <thead>
+                <th>Category</th>
+                <th>Sub-Category</th>
+                <th>Item Name</th>
+                <th>Item Quantity</th>
+                <th>Measurement Unit</th>
+                <th>Reorder Level</th>
+                <th>Timestamp</th>
+                <th>Last Updated</th>
+                <th>Created By</th>
+                <th>Place</th>
+                <th>Manage Stock</th>
+                <th>Actions</th>
 
-             <td>{{ product.measurement_unit }}</td>
-             <td><a href="/reorder_level/{{product.id}}">{{product.reorder_level}}</a></td>
-             <td>{{ product.timestamp}}</td>
-             <td>{{ product.last_updated }}</td>
-             <td>{{ request.user.username}}</td>
-             <td><a class="btn btn-dark mb-1" href="/receive_items/{{product.id}}">Recieve Item</a> <a class="btn btn-warning" href="/issue_items/{{product.id}}">Issue Item</a></td>
-             <td><a class="btn btn-info mb-1" href="/update_product/{{product.id}}">Update</a><a class="btn btn-danger" href="/delete_product/{{product.id}}" onclick="return confirm('Are you sure? Related product record will be deleted permanently.')">Delete</a></td>
+            </thead>
 
-        </tr>
-        {% endfor %}
+            {%for user in filter.qs%}
+            <tr>
+{#              <td><img width="70px" height="70px" src="{{ product.product_image.url }}"/></td>#}
+                <td>{{ user.category }}</td>
+                <td>{{user.sub_category}}</td>
+                <td>{{ user.item_name }}</td>
+                    {% if product.quantity <= product.reorder_level %}
+                <td style="background-color: red;">
+                    <a style="color: black;" href="/receive_items/{{ user.id }}">{{ user.quantity }}</a>
+                </td>
+                {% else %}
+                <td>{{ user.quantity }}</td>
+                {% endif %}
+
+                <td>{{ user.measurement_unit }}</td>
+                <td><a href="/reorder_level/{{user.id}}">{{user.reorder_level}}</a></td>
+                <td>{{ user.timestamp}}</td>
+                <td>{{ user.last_updated }}</td>
+                <td>{{ request.user.username}}</td>
+                <td>{{user.location}}</td>
+                <td><a class="btn btn-dark mb-1" href="/receive_items/{{user.id}}">Recieve Item</a> <a
+                        class="btn btn-warning" href="/issue_items/{{user.id}}">Issue Item</a></td>
+                <td><a class="btn btn-info mb-1" href="/update_product/{{user.id}}">Update</a><a
+                        class="btn btn-danger" href="/delete_product/{{user.id}}"
+                        onclick="return confirm('Are you sure? Related product record will be deleted permanently.')">Delete</a>
+                </td>
+
+            </tr>
+            {%endfor%}
+
+
+           <!-- Ritik Code-->
+            {%for user in data%}
+            <tr>
+{#              <td><img width="70px" height="70px" src="{{ product.product_image.url }}"/></td>#}
+                <td>{{ user.category }}</td>
+                <td>{{user.sub_category}}</td>
+                <td>{{ user.item_name }}</td>
+                    {% if product.quantity <= product.reorder_level %}
+                <td style="background-color: red;">
+                    <a style="color: black;" href="/receive_items/{{ user.id }}">{{ user.quantity }}</a>
+                </td>
+                {% else %}
+                <td>{{ user.quantity }}</td>
+                {% endif %}
+
+                <td>{{ user.measurement_unit }}</td>
+                <td><a href="/reorder_level/{{user.id}}">{{user.reorder_level}}</a></td>
+                <td>{{ user.timestamp}}</td>
+                <td>{{ user.last_updated }}</td>
+                <td>{{ request.user.username}}</td>
+                <td>{{user.location}}</td>
+                <td><a class="btn btn-dark mb-1" href="/receive_items/{{user.id}}">Recieve Item</a> <a
+                        class="btn btn-warning" href="/issue_items/{{user.id}}">Issue Item</a></td>
+                <td><a class="btn btn-info mb-1" href="/update_product/{{user.id}}">Update</a><a
+                        class="btn btn-danger" href="/delete_product/{{user.id}}"
+                        onclick="return confirm('Are you sure? Related product record will be deleted permanently.')">Delete</a>
+                </td>
+
+            </tr>
+            {%endfor%}
+
 
         </table>
+
+
+    </div>
+
+
 </div>
-
-
-
-</div>
-
 
 
 {% endblock %}
