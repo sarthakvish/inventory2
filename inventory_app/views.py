@@ -29,7 +29,11 @@ def stock_page_view(request):
         searchResult = Stock.objects.raw('SELECT * FROM stock WHERE timestamp between "' + str(formdate) + '" and "' + str(todate) + '"')
         print(searchResult)
 
-        return render(request, 'inventory_html/stock_list.html', {'data': searchResult, 'filter':filter_list})
+        return render(request, 'inventory_html/stock_list.html', {'data': searchResult, 'filter': filter_list})
+
+    return render(request, 'inventory_html/stock_list.html', {'filter': filter_list})
+
+
 
 
 
