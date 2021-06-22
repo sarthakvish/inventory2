@@ -297,12 +297,15 @@
 <div class="container style-container" align="center">
     <div class="wrapper">
         <!--Ritik code begins -->
-        <form method="post" name="company"  >
+        <form method="get" name="company"  >
             {% csrf_token %}
             {{filter.form}}
 
-            <button class="btn btn-primary-color" value="Submit" type="submit">Submit</button>
+            <button class="btn btn-primary-color" value="Submit" type="submit">Filter Record</button>
+        </form>
             <hr>
+        <form method="post">
+            {% csrf_token %}
             <h5 style="font-style:italic; text-align:center;">Search By Date</h5>
             From :<input type="date" name="formdate">
             To : <input type="date" name="todate" >
