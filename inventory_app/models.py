@@ -175,20 +175,20 @@ class Stock(models.Model):
 
         return super().save(*args, **kwargs)
 
+# Ritik Code
+#class Dropdown(models.Model):
+#    CHOICES = [
+#        ('category', 'Category'),
+#        ('sub_category', 'Sub_Category'),
+#        ('item_name', 'item_name'),
+#        ('location', 'location'),
+#    ]
 
-class Dropdown(models.Model):
-    CHOICES = [
-        ('category', 'Category'),
-        ('sub_category', 'Sub_Category'),
-        ('item_name', 'item_name'),
-        ('location', 'location'),
-    ]
-
-    dropdown = models.CharField(max_length=100, choices=CHOICES)
+#    dropdown = models.CharField(max_length=100, choices=CHOICES)
 
 
-    def __str__(self):
-        return self.dropdown
+ #   def __str__(self):
+  #      return self.dropdown
 
 
 class StockHistory(models.Model):

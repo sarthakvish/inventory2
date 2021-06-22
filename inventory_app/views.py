@@ -18,35 +18,32 @@ from inventory_app.resources import StockResource
 @login_required(login_url="/userloginviews")
 def stock_page_view(request):
 
+
     auth_user_id = request.user.id
     print(auth_user_id)
     stocks = Stock.objects.all()
 
+    filter_list = StockFilter(request.POST, queryset=stocks)
+
 
 #  Ritik code begins here
-#    form = DropdownForm()
-#  var1 = Dropdown.objects.last()
-#  drop = str(var1)
+    drop = DropdownForm()
+    print(drop)
     if request.method == 'POST':
+
         formdate= request.POST.get('formdate')
         todate = request.POST.get('todate')
         searchResult = Stock.objects.raw('SELECT * FROM stock WHERE timestamp between "'+str(formdate)+'" and "'+str(todate)+'"')
         print(searchResult)
-        return render(request, 'inventory_html/stock_list.html', {'stocks': stocks, 'data': searchResult})
+        return render(request, 'inventory_html/stock_list.html', {'stocks': stocks, 'filter': filter_list, 'drop': drop,  'data': searchResult})
 
-    else:
-        filter_list = StockFilter(request.POST, queryset=stocks)
 
 # Ritik's code end here
 
     # below statement is to fetch data from database and passing it in the form of list for use of twilio
     # stockitem=list(Stock.objects.all().values_list('item_name', flat=True))
     # print(stockitem)
-        return render(request, 'inventory_html/stock_list.html', {'stocks': stocks, 'filter': filter_list})
-
-#@login_required(login_url="/userloginviews")
-#def refresh(request):
-
+    return render(request, 'inventory_html/stock_list.html', {'stocks': stocks, 'filter': filter_list} )
 
 
 

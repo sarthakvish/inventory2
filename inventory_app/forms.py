@@ -40,8 +40,7 @@ class DropdownForm(forms.ModelForm):
         fields = ['dropdown']
 
         widget = {
-            'dropdown': forms.Select(attrs={
-                'onChange': 'if(this.value != "") {this.form.submit();}'}),
+            'dropdown': forms.Select(),
 
         }
 

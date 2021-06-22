@@ -300,23 +300,11 @@
         <form method="post" name="company"  >
             {% csrf_token %}
             {{filter.form}}
+
+            <button class="btn btn-primary-color" value="Submit" type="submit">Submit</button>
             <!-- Search by date date -->
-
-
-
-   <!--         {%if drop == 'category'%}
-               {{filter.form.category}}
-            {%elif drop == 'sub_category'%}
-                {{filter.form.sub_category}}
-            {%elif drop == 'item_name'%}
-                {{filter.form.item_name}}
-            {%elif drop == 'location'%}
-                {{filter.form.location}}
-            {%endif%}-->
-            <input type="submit" value="Submit">
-
             <hr>
-            <p style="text-align: center">Search by date</p>
+            <h3 style="font-style:italic; text-align:center;">Search By Date</h3>
             From :<input type="date" name="formdate">
             To : <input type="date" name="todate" >
             <input type="submit" value="Submit">
@@ -376,6 +364,8 @@
             </tr>
             {%endfor%}
 
+
+           <!-- Ritik Code -->
             {%for user in data%}
             <tr>
 {#              <td><img width="70px" height="70px" src="{{ product.product_image.url }}"/></td>#}
