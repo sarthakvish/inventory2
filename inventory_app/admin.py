@@ -3,7 +3,7 @@ from import_export.admin import ImportExportModelAdmin
 # For normal app
 
 from .forms import StockCreateForm, InvoiceForm
-from .models import Stock, Invoice, CustomUser,AdminUser,MerchantUser
+from .models import Stock, Invoice, CustomUser,AdminUser,MerchantUser # Dropdown
 
 
 class StockCreateAdmin(ImportExportModelAdmin):
@@ -23,5 +23,6 @@ admin.site.register(Invoice, InvoiceAdmin)
 admin.site.register(CustomUser)
 admin.site.register(AdminUser)
 admin.site.register(MerchantUser)
+# admin.site.register(Dropdown)
 
 

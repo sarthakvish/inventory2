@@ -9,6 +9,8 @@ from django.utils.translation import ugettext_lazy as _
 from twilio.rest import Client
 from decouple import config
 from dotenv import load_dotenv
+from django.utils import timezone
+
 
 load_dotenv()
 
@@ -110,6 +112,7 @@ class CustomerUser(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
 
+
 # models for Normal app.
 class Stock(models.Model):
     unit = 'un'
@@ -120,8 +123,11 @@ class Stock(models.Model):
         (kilogram, 'kg'),
         (bori, 'bori'),
     ]
+    class Meta:
+        db_table = "stock"
     auth_user_id = models.CharField(max_length=5, blank=True, null=True)
     category = models.CharField(max_length=50, blank=True, null=True)
+    sub_category = models.CharField(max_length=50, blank=True, null=True)
     item_name = models.CharField(max_length=50, blank=True, null=True)
     provider_merchant_name = models.CharField(max_length=50, blank=True, null=True)
     provider_merchant_contact = models.CharField(max_length=255, blank=True, null=True)
@@ -136,13 +142,17 @@ class Stock(models.Model):
     created_by = models.CharField(max_length=50, blank=True, null=True)
     reorder_level = models.IntegerField(default='0', blank=True, null=True)
     last_updated = models.DateTimeField(auto_now_add=False, auto_now=True)
-    timestamp = models.DateTimeField(auto_now_add=True, auto_now=False)
+    location = models.CharField(max_length=200, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now=True)
     export_to_CSV = models.BooleanField(default=False)
 
     def __str__(self):
         return self.item_name + ' ' + str(self.quantity) + ' ' + self.measurement_unit
 
     # code for sms alert for this model- Stock inside save method- Twilio api
+
+
+
 
     def save(self, *args, **kwargs):
         try:
@@ -165,6 +175,21 @@ class Stock(models.Model):
 
         return super().save(*args, **kwargs)
 
+# Ritik Code
+#class Dropdown(models.Model):
+#    CHOICES = [
+#        ('category', 'Category'),
+#        ('sub_category', 'Sub_Category'),
+#        ('item_name', 'item_name'),
+#        ('location', 'location'),
+#    ]
+
+#    dropdown = models.CharField(max_length=100, choices=CHOICES)
+
+
+ #   def __str__(self):
+  #      return self.dropdown
+
 
 class StockHistory(models.Model):
     auth_user_id = models.CharField(max_length=5, blank=True, null=True)
@@ -181,6 +206,7 @@ class StockHistory(models.Model):
     reorder_level = models.IntegerField(default='0', blank=True, null=True)
     last_updated = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)
     timestamp = models.DateTimeField(auto_now_add=False, auto_now=False, null=True)
+
 
 
 # Models for Invoice
