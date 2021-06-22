@@ -22,15 +22,16 @@ def stock_page_view(request):
     auth_user_id = request.user.id
     print(auth_user_id)
     stocks = Stock.objects.all()
-    filter_list = StockFilter(request.POST, queryset=stocks)
+
+
     if request.method == 'POST':
         formdate = request.POST.get('formdate')
         todate = request.POST.get('todate')
         searchResult = Stock.objects.raw('SELECT * FROM stock WHERE timestamp between "' + str(formdate) + '" and "' + str(todate) + '"')
         print(searchResult)
-
-        return render(request, 'inventory_html/stock_list.html', {'data': searchResult, 'filter': filter_list})
-
+        return render(request, 'inventory_html/stock_list.html', {'data': searchResult})
+    else:
+        filter_list = StockFilter(request.GET, queryset=stocks)
     return render(request, 'inventory_html/stock_list.html', {'filter': filter_list})
 
 
