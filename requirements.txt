@@ -16,3 +16,4 @@ tablib~=3.0.0
 requests~=2.25.1
 django-bootstrap4
 psycopg2-binary
+django-filter

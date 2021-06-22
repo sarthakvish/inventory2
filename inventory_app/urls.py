@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.urls import path
-from . import views, AdminViews, CustomerViews, MerchantViews, StaffViews, UsersLoginViews
+from . import views, AdminViews, CustomerViews, MerchantViews, StaffViews, UsersLoginViews, PurchaseViews
 
 urlpatterns = [
     path('stock/', views.stock_page_view, name='stock'),
@@ -24,6 +24,13 @@ urlpatterns = [
     path('merchant_create',login_required(AdminViews.MerchantUserCreateView.as_view()),name="merchant_create"),
     path('merchant_list',login_required(AdminViews.MerchantUserListView.as_view()),name="merchant_list"),
     path('merchant_update/<slug:pk>',login_required(AdminViews.MerchantUserUpdateView.as_view()),name="merchant_update"),
+
+    # url for Adminviews.py file for Purchase Journey
+
+    path('create_requirements/', PurchaseViews.create_requirements, name='create_requirements'),
+    path('accepting_quotation/', PurchaseViews.accepting_quotation, name='accepting_quotation'),
+    path('purchase_order/', PurchaseViews.purchase_order, name='purchase_order'),
+    path('receiving/', PurchaseViews.receiving_invoice, name='receiving'),
 
 
     # genral admin
