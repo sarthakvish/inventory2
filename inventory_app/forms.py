@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.validators import RegexValidator
 from django.db.models import Q
 
-from .models import Stock, Invoice, MerchantUser, CustomUser, Dropdown
+from .models import Stock, Invoice, MerchantUser, CustomUser #Dropdown
 
 
 class StockCreateForm(forms.ModelForm):
@@ -34,15 +34,15 @@ class ReorderLevelForm(forms.ModelForm):
         fields = ['reorder_level']
 
 
-class DropdownForm(forms.ModelForm):
-    class Meta:
-        model = Dropdown
-        fields = ['dropdown']
+#class DropdownForm(forms.ModelForm):
+ #   class Meta:
+  #      model = Dropdown
+   #     fields = ['dropdown']
 
-        widget = {
-            'dropdown': forms.Select(),
+    #    widget = {
+     #       'dropdown': forms.Select(),
 
-        }
+      #  }
 
 
 # forms for Invoice management
