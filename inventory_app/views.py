@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.urls import reverse
 from tablib import Dataset
 
-from inventory_app.models import Stock, StockHistory, Dropdown
+from inventory_app.models import Stock, StockHistory,
 from inventory_app.forms import StockCreateForm, ReceiveForm, IssueForm, ReorderLevelForm, DropdownForm
 from django.http import HttpResponse, HttpResponseRedirect
 from .filter import StockFilter
