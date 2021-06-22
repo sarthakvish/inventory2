@@ -149,6 +149,23 @@
         </li>
 
 
+
+      {% comment %} Purchase Journey MENU {% endcomment %}
+        {% url 'create_requirements' as create_requirements %}
+        {% url 'accepting_quotation' as accepting_quotation %}
+        {% url 'purchase_order'  as purchase_order %}
+        {% url 'receiving' as receiving %}
+        <li class="dropdown {% if request.path == create_requirements %} active {% endif %}{% if request.path == accepting_quotation%} active {% endif %}{% if request.path == purchase_order %} active {% endif %}{% if request.path == receiving %} active {% endif %}">
+          <a href="#" class="nav-link has-dropdown"><i class="fa fa-user-circle" aria-hidden="true"></i><span>Purchase Journey</span></a>
+          <ul class="dropdown-menu">
+            <li class='{% if request.path == create_requirements %} active {% endif %}'><a class="nav-link" href="{% url 'create_requirements' %}">Create Requirements</a></li>
+            <li class='{% if request.path == accepting_quotation %} active {% endif %} '><a class="nav-link" href="{% url 'accepting_quotation' %}">Accepting Quotation</a></li>
+            <li class='{% if request.path == purchase_order %} active {% endif %}'><a class="nav-link" href="{% url 'purchase_order' %}">Purchase Order</a></li>
+            <li class='{% if request.path == receiving %} active {% endif %} {% if request.path == receiving %} active {% endif %}' ><a class="nav-link" href="{% url 'receiving' %}">Receiving & Invoice</a></li>
+          </ul>
+        </li>
+
+
       </ul>
 
       <div class="mt-4 mb-4 p-3 hide-sidebar-mini">
