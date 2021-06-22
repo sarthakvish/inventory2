@@ -6,7 +6,7 @@ from django.urls import reverse
 from tablib import Dataset
 
 from inventory_app.models import Stock, StockHistory
-from inventory_app.forms import StockCreateForm, ReceiveForm, IssueForm, ReorderLevelForm, DropdownForm
+from inventory_app.forms import StockCreateForm, ReceiveForm, IssueForm, ReorderLevelForm
 from django.http import HttpResponse, HttpResponseRedirect
 from .filter import StockFilter
 import csv
@@ -22,20 +22,16 @@ def stock_page_view(request):
     auth_user_id = request.user.id
     print(auth_user_id)
     stocks = Stock.objects.all()
-
     filter_list = StockFilter(request.POST, queryset=stocks)
-
-
-#  Ritik code begins here
-    drop = DropdownForm()
-    print(drop)
     if request.method == 'POST':
-
-        formdate= request.POST.get('formdate')
+        formdate = request.POST.get('formdate')
         todate = request.POST.get('todate')
-        searchResult = Stock.objects.raw('SELECT * FROM stock WHERE timestamp between "'+str(formdate)+'" and "'+str(todate)+'"')
+        searchResult = Stock.objects.raw('SELECT * FROM stock WHERE timestamp between "' + str(formdate) + '" and "' + str(todate) + '"')
         print(searchResult)
-        return render(request, 'inventory_html/stock_list.html', {'stocks': stocks, 'filter': filter_list, 'drop': drop,  'data': searchResult})
+
+        return render(request, 'inventory_html/stock_list.html', {'data': searchResult, 'filter':filter_list})
+
+
 
 
 # Ritik's code end here
@@ -43,8 +39,7 @@ def stock_page_view(request):
     # below statement is to fetch data from database and passing it in the form of list for use of twilio
     # stockitem=list(Stock.objects.all().values_list('item_name', flat=True))
     # print(stockitem)
-    return render(request, 'inventory_html/stock_list.html', {'stocks': stocks, 'filter': filter_list} )
-
+    return render(request, 'inventory_html/stock_list.html', {'filter': filter_list})
 
 
 
